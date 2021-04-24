@@ -22,7 +22,13 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->realText(25),
+            'description' => $this->faker->text(),
+            'img' => 'img/category-' . $this->faker->randomNumber(1)
         ];
     }
 }
+
+// // $table->string('name', 25);
+// $table->text('description', 100);
+// $table->string('img', 35);

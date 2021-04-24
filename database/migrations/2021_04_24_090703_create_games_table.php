@@ -18,9 +18,9 @@ class CreateGamesTable extends Migration
             $table->string('name', 35);
             $table->text('description', 150);
             $table->string('img', 35);
-            $table->enum('pegi', [3,7,12,16,18]);
-            $table->double('price',4,2);
-            $table->enum('state', ['mal', 'regular', 'bien', 'como nuevo']);
+            $table->enum('pegi', ['3','7','12','16','18']);
+            $table->double('price',6,2);
+            $table->enum('state', ['mal', 'regular', 'bien', 'como nuevo'])->default('bien');
             $table->date('published_at');
             $table->enum('plataforms', ['ps4', 'ps5', 'xboxOne', 'xboxX', 'NS', 'Stadia']);
             $table->timestamps();
@@ -38,7 +38,7 @@ class CreateGamesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('game_id')->nullable();
             $table->boolean('is_purchased')->default(false);
-            $table->text('comment'. 150)->nullable();
+            $table->text('comment', 150)->nullable();
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('set null');
             $table->foreign('game_id')->references('id')
