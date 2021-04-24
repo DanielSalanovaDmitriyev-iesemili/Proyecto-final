@@ -18,4 +18,8 @@ class Game extends Model
     public function users () {
         return $this->belongsToMany(User::class)->withPivot('is_purchased', 'comment');
     }
+
+    public function plataforms () {
+        return $this->belongsToMany(Plataform::class);
+    }
 }

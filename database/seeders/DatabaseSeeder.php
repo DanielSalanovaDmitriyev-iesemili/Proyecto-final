@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Game;
+use App\Models\Plataform;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -19,12 +20,11 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\Game::factory(50)->create();
         \App\Models\Category::factory(20)->create();
+        \App\Models\Plataform::factory(6)->create();
 
         $faker = Factory::create();
         $categories = Category::all();
-        $games = Game::all();
-
-
+        $plataforms = Plataform::all();
 
         Game::factory(10)->hasAttached(User::factory()->count(2),
         [
@@ -37,5 +37,12 @@ class DatabaseSeeder extends Seeder
                 $categories->random(rand(1, 3))->pluck('id')->toArray()
             );
         });
+
+        Game::all()->each(function ($game) use ($plataforms) {
+            $game->plataforms()->attach(
+                $plataforms->random(rand(1, 6))->pluck('id')->toArray()
+            );
+        });
+
     }
 }
