@@ -35,8 +35,9 @@ Route::put('/games/{game}', [GameController::class, 'update'])->name('games.upda
 
 Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.delete');
 
-Route::post('/games/comment', [GameController::class, 'comment'])->name('games.comment');
+Route::post('/games/comment', [GameController::class, 'comment'])->name('games.comment'); //$game->users()->attach(2,['is_purchased' => false, 'comment'=> 'dasdsa'])
 
+Route::post('/email', [GameController::class, 'email'])->name('games.email');
 //categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
