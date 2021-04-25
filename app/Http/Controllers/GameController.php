@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Game;
+use App\Models\Plataform;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\Caster\GmpCaster;
 
 class GameController extends Controller
 {
@@ -14,7 +17,11 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        $plataforms = Plataform::all();
+        $games = Game::paginate(5);
+
+        return view('layouts.index', compact('games', 'plataforms', 'categories'));
     }
 
     /**
@@ -22,6 +29,34 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function filter (Request $request, Game $game) {
+        $game = $game->newQuery();
+
+         if(!$request->plataform == null) {
+            $game->whereHas('plataforms', function ($query) use ($request){
+             $query->where('name', $request->plataform);
+
+         });}
+
+         if(!$request->genre == null) {
+             $game->whereHas('categories', function ($query) use ($request){
+             $query->where('name', $request->genre);
+
+          });}
+
+        if(!$request->iniPrice == null && !$request->endPrice == null) {
+            $game->where('price', '>=',  $request->iniPrice);
+            $game->where('price', '<=', $request->endPrice);
+         }
+
+        if(!$request->state == null) {
+            $game->where('state',$request->state);
+        }
+
+        return $game->get();
+     }
+
     public function create()
     {
         //
@@ -46,7 +81,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        //
+        return view('partials.game-detail', compact('game'));
     }
 
     /**
