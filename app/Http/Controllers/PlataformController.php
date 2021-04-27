@@ -81,6 +81,13 @@ class PlataformController extends Controller
      */
     public function destroy(Plataform $plataform)
     {
-        //
+        $plataform->delete();
+        return redirect()->route('plataforms.admin.list');
+    }
+
+    public function plataformList ()
+    {
+        $plataforms = Plataform::paginate(20);
+        return view('layouts.plataforms.list', compact('plataforms'));
     }
 }

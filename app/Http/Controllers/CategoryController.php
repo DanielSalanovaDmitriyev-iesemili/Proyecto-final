@@ -80,6 +80,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.admin.list');
+    }
+
+    function categoryList ()
+    {
+        $categories = Category::paginate(20);
+        return view('layouts.categories.list', compact('categories'));
     }
 }
