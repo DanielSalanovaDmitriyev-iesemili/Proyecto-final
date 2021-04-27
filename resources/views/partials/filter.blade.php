@@ -30,7 +30,10 @@
     <h6>Precio Final</h6>
     <input type="number" name="endPrice">
 
+    <h5>Search Name</h5>
+    <input type="text" name="title" id="searchName">
     <button type="submit">Search</button>
 </form>
+
 
 
