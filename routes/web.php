@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
 Route::get('/games/{game}', [GameController::class, 'show'])->name('games.show');
 Route::get('/games/category/{name}', [GameController::class, 'categoryFilter'])->name('games.category');
-Route::get('/games/filter', [GameController::class, 'filter'])->name('games.filter');
+Route::get('/filter', [GameController::class, 'filter'])->name('games.filter');
 
 Route::get('/games/create', [GameController::class, 'create'])->name('games.create');
 Route::post('/games', [GameController::class, 'store'])->name('games.store');
