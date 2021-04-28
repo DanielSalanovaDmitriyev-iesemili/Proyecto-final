@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.categories.create');
     }
 
     /**
@@ -35,7 +35,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $imagenTemporal = $_FILES["img"]["tmp_name"];
+        $fullImgPath ="img/"  .  $_FILES["img"]["name"];
+        move_uploaded_file($imagenTemporal, $fullImgPath);
+        $fp = fopen($fullImgPath, 'r+b');
+        fclose($fp);
+        return 'Creo que guay!';
     }
 
     /**
