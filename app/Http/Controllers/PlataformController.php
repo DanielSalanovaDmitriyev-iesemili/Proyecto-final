@@ -25,7 +25,7 @@ class PlataformController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.plataforms.create');
     }
 
     /**
@@ -36,7 +36,9 @@ class PlataformController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $plataform = new Plataform ($this->validatePlataform());
+        $plataform->save();
+        return redirect()->route('plataforms.admin.list');
     }
 
     /**
@@ -58,7 +60,7 @@ class PlataformController extends Controller
      */
     public function edit(Plataform $plataform)
     {
-        //
+        return view('layouts.plataforms.edit', compact('plataform'));
     }
 
     /**
@@ -70,7 +72,8 @@ class PlataformController extends Controller
      */
     public function update(Request $request, Plataform $plataform)
     {
-        //
+        $plataform->update($this->validatePlataform());
+        return redirect()->route("plataforms.admin.list");
     }
 
     /**
@@ -89,5 +92,11 @@ class PlataformController extends Controller
     {
         $plataforms = Plataform::paginate(20);
         return view('layouts.plataforms.list', compact('plataforms'));
+    }
+    public function validatePlataform()
+    {
+        return request()->validate([
+            'name' => 'required|max:25',
+        ]);
     }
 }

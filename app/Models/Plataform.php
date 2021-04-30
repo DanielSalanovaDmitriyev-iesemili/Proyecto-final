@@ -9,6 +9,7 @@ class Plataform extends Model
 {
     use HasFactory;
 
+    public $fillable = ["name"];
     public function games () {
         return $this->belongsToMany(Game::class);
     }
