@@ -46,7 +46,7 @@ Route::get('/admin/categories', [CategoryController::class, 'categoryList'])->na
 Route::get('/admin/categories/create', [CategoryController::class, 'create'])->name('categories.create');
 Route::post('/admin/categories', [CategoryController::class, 'store'])->name('categories.store');
 
-Route::get('/admin/categories/edit/{category}', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::get('/admin/categories/{category}/edit',[CategoryController::class, 'edit'])->name('categories.edit');
 Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
 
 Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.delete');

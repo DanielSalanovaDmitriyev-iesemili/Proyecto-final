@@ -35,13 +35,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $imagenTemporal = $_FILES["img"]["tmp_name"];
-        $fullImgPath ="img/"  .  $_FILES["img"]["name"];
+
+        $imagenTemporal = $_FILES["image"]["tmp_name"];
+        $fullImgPath ="img/".$_FILES["image"]["name"];
+
+        $category = new Category($this->validateCategory());
+        $category->img = $fullImgPath;
+        $category->save();
+
         move_uploaded_file($imagenTemporal, $fullImgPath);
         $fp = fopen($fullImgPath, 'r+b');
         fclose($fp);
-        return 'Creo que guay!';
+        return redirect()->route('categories.admin.list');
     }
 
     /**
@@ -63,7 +68,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view("layouts.categories.edit", compact("category"));
     }
 
     /**
@@ -75,7 +80,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+
+        if(!$_FILES["image"]["name"] == null){
+            $imagenTemporal = $_FILES["image"]["tmp_name"];
+            $fullImgPath ="img/".$_FILES["image"]["name"];
+
+            $category->img = $fullImgPath;
+            $category->update($this->validateCategory());
+
+            move_uploaded_file($imagenTemporal, $fullImgPath);
+            $fp = fopen($fullImgPath, 'r+b');
+            fclose($fp);
+            return redirect()->route('categories.admin.list');
+        }else{
+            $category->update($this->validateCategory());
+            return redirect()->route('categories.admin.list');
+        }
     }
 
     /**
@@ -94,5 +114,14 @@ class CategoryController extends Controller
     {
         $categories = Category::paginate(20);
         return view('layouts.categories.list', compact('categories'));
+    }
+
+    public function validateCategory()
+    {
+        return request()->validate([
+            'name' => 'required|max:25',
+            'description' => 'required|max:100',
+            'image' => 'file|mimes:jpg,png'
+        ]);
     }
 }
