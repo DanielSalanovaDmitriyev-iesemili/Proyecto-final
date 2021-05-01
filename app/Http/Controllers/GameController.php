@@ -6,7 +6,8 @@ use App\Models\Category;
 use App\Models\Game;
 use App\Models\Plataform;
 use Illuminate\Http\Request;
-use Symfony\Component\VarDumper\Caster\GmpCaster;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class GameController extends Controller
 {
@@ -130,22 +131,37 @@ class GameController extends Controller
     {
 
         if(!$_FILES["image"]["name"] == null){
+            $validator = Validator::make(
+                ['image' => $_FILES["image"]["name"]],
+                ['image' => 'max:35']);
+            if ( $validator->fails() )
+            {
+                return Redirect::back()->withErrors($validator);
+            }
             $imagenTemporal = $_FILES["image"]["tmp_name"];
             $fullImgPath ="img/".$_FILES["image"]["name"];
 
             $game->img = $fullImgPath;
 
+            $game->plataforms()->detach();
+            $game->plataforms()->attach(request('plataforms'));
+            $game->categories()->detach();
+            $game->categories()->attach(request('categories'));
+
+            $game->update($this->validateGame());
             move_uploaded_file($imagenTemporal, $fullImgPath);
             $fp = fopen($fullImgPath, 'r+b');
             fclose($fp);
+        }else{
+            $game->plataforms()->detach();
+            $game->plataforms()->attach(request('plataforms'));
+            $game->categories()->detach();
+            $game->categories()->attach(request('categories'));
+
+            $game->update($this->validateGame());
         }
 
-        $game->plataforms()->detach();
-        $game->plataforms()->attach(request('plataforms'));
-        $game->categories()->detach();
-        $game->categories()->attach(request('categories'));
 
-        $game->update($this->validateGame());
         return redirect()->route('games.admin.list');
     }
 
@@ -175,7 +191,7 @@ class GameController extends Controller
             "pegi" => "required|in:3,7,12,16,18",
             "price" => "required|numeric|min:0.5|max:1000.99",
             "state"=> "required|in:mal,regular,bien,como nuevo",
-            "published_at" =>"required|date",
+            "published_at" =>"required|date"
         ]);
     }
 }

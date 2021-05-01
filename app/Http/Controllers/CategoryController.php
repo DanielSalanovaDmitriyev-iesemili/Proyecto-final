@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {
@@ -82,6 +84,13 @@ class CategoryController extends Controller
     {
 
         if(!$_FILES["image"]["name"] == null){
+            $validator = Validator::make(
+                ['image' => $_FILES["image"]["name"]],
+                ['image' => 'max:35']);
+            if ( $validator->fails() )
+            {
+                return Redirect::back()->withErrors($validator);
+            }
             $imagenTemporal = $_FILES["image"]["tmp_name"];
             $fullImgPath ="img/".$_FILES["image"]["name"];
 
