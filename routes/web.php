@@ -3,7 +3,7 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PlataformController;
-
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-//games
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+	//games
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
 Route::get('/games/{game}', [GameController::class, 'show'])->name('games.show');
 Route::get('/games/category/{name}', [GameController::class, 'categoryFilter'])->name('games.category');
@@ -62,3 +60,7 @@ Route::get('/admin/plataforms/edit/{plataform}', [PlataformController::class, 'e
 Route::put('/admin/plataforms/{plataform}', [PlataformController::class, 'update'])->name('plataforms.update');
 
 Route::delete('/admin/plataforms/{plataform}', [PlataformController::class, 'destroy'])->name('plataforms.delete');
+
+});
+
+
