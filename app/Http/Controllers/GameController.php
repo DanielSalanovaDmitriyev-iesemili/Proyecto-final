@@ -6,7 +6,8 @@ use App\Models\Category;
 use App\Models\Game;
 use App\Models\Plataform;
 use Illuminate\Http\Request;
-use Symfony\Component\VarDumper\Caster\GmpCaster;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class GameController extends Controller
 {
@@ -66,7 +67,9 @@ class GameController extends Controller
 
     public function create()
     {
-        //
+        $plataforms = Plataform::all();
+        $categories = Category::all();
+        return view("layouts.games.create", compact("plataforms", "categories"));
     }
 
     /**
@@ -77,7 +80,18 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $imagenTemporal = $_FILES["image"]["tmp_name"];
+        $fullImgPath ="img/".$_FILES["image"]["name"];
+
+        $game = new Game($this->validateGame());
+        $game->img = $fullImgPath;
+        $game->save();
+        $game->plataforms()->attach(request('plataforms'));
+        $game->categories()->attach(request('categories'));
+        move_uploaded_file($imagenTemporal, $fullImgPath);
+        $fp = fopen($fullImgPath, 'r+b');
+        fclose($fp);
+        return redirect()->route('games.admin.list');
     }
 
     /**
@@ -101,7 +115,9 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        $plataforms = Plataform::all();
+        $categories = Category::all();
+        return view("layouts.games.edit", compact("plataforms", "categories", "game"));
     }
 
     /**
@@ -113,7 +129,40 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+
+        if(!$_FILES["image"]["name"] == null){
+            $validator = Validator::make(
+                ['image' => $_FILES["image"]["name"]],
+                ['image' => 'max:35']);
+            if ( $validator->fails() )
+            {
+                return Redirect::back()->withErrors($validator);
+            }
+            $imagenTemporal = $_FILES["image"]["tmp_name"];
+            $fullImgPath ="img/".$_FILES["image"]["name"];
+
+            $game->img = $fullImgPath;
+
+            $game->plataforms()->detach();
+            $game->plataforms()->attach(request('plataforms'));
+            $game->categories()->detach();
+            $game->categories()->attach(request('categories'));
+
+            $game->update($this->validateGame());
+            move_uploaded_file($imagenTemporal, $fullImgPath);
+            $fp = fopen($fullImgPath, 'r+b');
+            fclose($fp);
+        }else{
+            $game->plataforms()->detach();
+            $game->plataforms()->attach(request('plataforms'));
+            $game->categories()->detach();
+            $game->categories()->attach(request('categories'));
+
+            $game->update($this->validateGame());
+        }
+
+
+        return redirect()->route('games.admin.list');
     }
 
     /**
@@ -132,5 +181,17 @@ class GameController extends Controller
     {
         $games = Game::paginate(20);
         return view('layouts.games.list', compact('games'));
+    }
+
+    public function validateGame(){
+        return request()->validate([
+            "name" => "required|max:35",
+            "description" => "required|max:150",
+            "image" => "file|mimes:jpg,png",
+            "pegi" => "required|in:3,7,12,16,18",
+            "price" => "required|numeric|min:0.5|max:1000.99",
+            "state"=> "required|in:mal,regular,bien,como nuevo",
+            "published_at" =>"required|date"
+        ]);
     }
 }

@@ -15,7 +15,7 @@ class CreatePlataformsTable extends Migration
     {
         Schema::create('plataforms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name',25);
             $table->timestamps();
         });
         Schema::create('game_plataform', function (Blueprint $table) {

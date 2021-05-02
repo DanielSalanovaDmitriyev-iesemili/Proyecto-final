@@ -22,7 +22,6 @@ class CreateGamesTable extends Migration
             $table->double('price',6,2);
             $table->enum('state', ['mal', 'regular', 'bien', 'como nuevo'])->default('bien');
             $table->date('published_at');
-            $table->enum('plataforms', ['ps4', 'ps5', 'xboxOne', 'xboxX', 'NS', 'Stadia']);
             $table->timestamps();
         });
         Schema::create('category_game', function (Blueprint $table) {
@@ -39,6 +38,7 @@ class CreateGamesTable extends Migration
             $table->unsignedBigInteger('game_id')->nullable();
             $table->boolean('is_purchased')->default(false);
             $table->text('comment', 150)->nullable();
+
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('set null');
             $table->foreign('game_id')->references('id')

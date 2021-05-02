@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {
@@ -24,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.categories.create');
     }
 
     /**
@@ -35,7 +37,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $imagenTemporal = $_FILES["image"]["tmp_name"];
+        $fullImgPath ="img/".$_FILES["image"]["name"];
+
+        $category = new Category($this->validateCategory());
+        $category->img = $fullImgPath;
+        $category->save();
+
+        move_uploaded_file($imagenTemporal, $fullImgPath);
+        $fp = fopen($fullImgPath, 'r+b');
+        fclose($fp);
+        return redirect()->route('categories.admin.list');
     }
 
     /**
@@ -57,7 +70,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view("layouts.categories.edit", compact("category"));
     }
 
     /**
@@ -69,7 +82,29 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+
+        if(!$_FILES["image"]["name"] == null){
+            $validator = Validator::make(
+                ['image' => $_FILES["image"]["name"]],
+                ['image' => 'max:35']);
+            if ( $validator->fails() )
+            {
+                return Redirect::back()->withErrors($validator);
+            }
+            $imagenTemporal = $_FILES["image"]["tmp_name"];
+            $fullImgPath ="img/".$_FILES["image"]["name"];
+
+            $category->img = $fullImgPath;
+            $category->update($this->validateCategory());
+
+            move_uploaded_file($imagenTemporal, $fullImgPath);
+            $fp = fopen($fullImgPath, 'r+b');
+            fclose($fp);
+            return redirect()->route('categories.admin.list');
+        }else{
+            $category->update($this->validateCategory());
+            return redirect()->route('categories.admin.list');
+        }
     }
 
     /**
@@ -80,6 +115,22 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.admin.list');
+    }
+
+    function categoryList ()
+    {
+        $categories = Category::paginate(20);
+        return view('layouts.categories.list', compact('categories'));
+    }
+
+    public function validateCategory()
+    {
+        return request()->validate([
+            'name' => 'required|max:25',
+            'description' => 'required|max:100',
+            'image' => 'file|mimes:jpg,png'
+        ]);
     }
 }

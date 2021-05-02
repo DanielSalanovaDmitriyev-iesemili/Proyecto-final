@@ -22,7 +22,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->realText(25),
+            'name' =>$this->faker->randomElement(['accion', 'aventuras', 'mmo', 'rpg', 'rol', 'mesa', 'shooter']),
             'description' => $this->faker->text(),
             'img' => 'img/category-' . $this->faker->randomNumber(1)
         ];
