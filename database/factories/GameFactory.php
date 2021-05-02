@@ -29,7 +29,6 @@ class GameFactory extends Factory
             'price' => $this->faker->randomFloat(2,1,200),
             'state' => $this->faker->randomElement(['mal', 'regular', 'bien', 'como nuevo']),
             'published_at' => $this->faker->dateTime(),
-            'plataforms' => $this->faker->randomElement(['ps4', 'ps5', 'xboxOne', 'xboxX', 'NS', 'Stadia'])
         ];
     }
 }

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
+    public $fillable=["name", "description", "img", "pegi", "price", "state", "published_at"];
     use HasFactory;
-
 
     public function categories () {
         return $this->belongsToMany(Category::class);

@@ -22,7 +22,7 @@ class PlataformFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->realText(25)
+            'name' => $this->faker->randomElement(['ps4', 'switch', 'stadia', 'xbox one', 'ps5', 'xbox series x', 'pc', '3ds', 'ds', 'psp', 'ps vita', 'ps3', 'ps2', 'xbox 360', 'GBA', 'dreamcast', 'N64', 'game boy', 'game boy color'])
         ];
     }
 }
