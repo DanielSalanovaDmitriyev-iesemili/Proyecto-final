@@ -22,4 +22,12 @@ class Game extends Model
     public function plataforms () {
         return $this->belongsToMany(Plataform::class);
     }
+
+    public function checkIfEmpty($obj){
+        foreach ($obj as $item){
+            return false;
+        }
+
+        return true;
+    }
 }

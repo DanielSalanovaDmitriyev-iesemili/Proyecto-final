@@ -11,7 +11,7 @@
     <h1>Main page!</h1>
     <div class="row">
         <div class="col-md-6">
-            <h1>Idiomas</h1>
+            <h1>{{__('Languages')}}</h1>
             <ul>
                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                     <li>
@@ -21,7 +21,7 @@
                     </li>
                 @endforeach
             </ul>
-            <h1>Filtros!</h1>
+            <h1>{{__('Filters')}}</h1>
             @include('partials.filter')
         </div>
         <div class="col-md-6">

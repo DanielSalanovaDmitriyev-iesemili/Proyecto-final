@@ -9,7 +9,7 @@
 </head>
 <body>
     <div>
-        <h1>Idiomas</h1>
+        <h1>{{__('Languages')}}</h1>
             <ul>
                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                     <li>

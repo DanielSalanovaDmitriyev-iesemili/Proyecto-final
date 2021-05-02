@@ -53,7 +53,7 @@ Route::delete('/admin/categories/{category}', [CategoryController::class, 'destr
 Route::get(LaravelLocalization::transRoute('routes.plataforms'), [PlataformController::class, 'index'])->name('plataforms.index');
 
 Route::get(LaravelLocalization::transRoute('routes.plataforms.admin.list'), [PlataformController::class, 'plataformList'])->name('plataforms.admin.list');
-Route::get(LaravelLocalization::transRoute('routes.plataforms,admin.create'), [PlataformController::class, 'create'])->name('plataforms.create');
+Route::get(LaravelLocalization::transRoute('routes.plataforms.admin.create'), [PlataformController::class, 'create'])->name('plataforms.create');
 Route::post('/admin/plataforms', [PlataformController::class, 'store'])->name('plataforms.store');
 
 Route::get(LaravelLocalization::transRoute('routes.plataforms.admin.edit'), [PlataformController::class, 'edit'])->name('plataforms.edit');

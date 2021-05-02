@@ -1,3 +1,20 @@
 {
-    
+    "Name" : "Nombre",
+    "Description": "Descripción",
+    "Image":"Imagen",
+    "Submit":"Enviar",
+    "Edit":"Editar",
+    "Delete":"Eliminar",
+    "Price":"Precio",
+    "Plataforms":"Plataformas",
+    "Genres": "Géneros",
+    "State":"Estado",
+    "Published at":"Publicado",
+    "Languages": "Lenguajes",
+    "Filters":"Filtros",
+    "Initial Price": "Precio Inicial",
+    "End Price": "Precio Final",
+    "Search Name": "Buscar Nombre",
+    "Search":"Buscar"
+
 }

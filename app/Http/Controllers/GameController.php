@@ -22,6 +22,18 @@ class GameController extends Controller
         $plataforms = Plataform::all();
         $games = Game::paginate(5);
 
+        $firstGame = Game::where('id', 7)->first();
+        $categorias = $firstGame->categories()->get();
+        foreach ($categorias as $categoria){
+            dump('Yei');
+        }
+        // return $categorias[0];
+        // if(isset($categorias[0])){
+        //     return "Vacio";
+        // }else{
+        //     return "No vacio";
+        // }
+        // return $firstGame->plataforms()->get();
         return view('partials.games', compact('games', 'plataforms', 'categories'));
     }
 

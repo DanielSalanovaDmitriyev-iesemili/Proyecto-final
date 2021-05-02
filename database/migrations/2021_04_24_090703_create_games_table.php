@@ -29,9 +29,9 @@ class CreateGamesTable extends Migration
             $table->unsignedBigInteger('game_id')->nullable();
             $table->unique(['category_id', 'game_id']);
             $table->foreign('category_id')->references('id')
-            ->on('categories')->onDelete('set null');
+            ->on('categories')->onDelete('cascade');
             $table->foreign('game_id')->references('id')
-            ->on('games')->onDelete('set null');
+            ->on('games')->onDelete('cascade');
         });
         Schema::create('game_user', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable();
@@ -40,9 +40,9 @@ class CreateGamesTable extends Migration
             $table->text('comment', 150)->nullable();
 
             $table->foreign('user_id')->references('id')
-            ->on('users')->onDelete('set null');
+            ->on('users')->onDelete('cascade');
             $table->foreign('game_id')->references('id')
-            ->on('games')->onDelete('set null');
+            ->on('games')->onDelete('cascade');
         });
     }
 

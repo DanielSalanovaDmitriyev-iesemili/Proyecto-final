@@ -3,16 +3,16 @@
 <table>
     <tr>
       <th>ID</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Image</th>
+      <th>{{__('Name')}}</th>
+      <th>{{__('Description')}}</th>
+      <th>{{__('Image')}}</th>
       <th>Pegi</th>
-      <th>Price</th>
-      <th>State</th>
-      <th>Plataforms</th>
-      <th>Genres</th>
-      <th>Edit</th>
-      <th>Delete</th>
+      <th>{{__('Price')}}</th>
+      <th>{{__('State')}}</th>
+      <th>{{__('Plataforms')}}</th>
+      <th>{{__('Genres')}}</th>
+      <th></th>
+      <th></th>
     </tr>
     @foreach ($games as $game)
         <tr>
@@ -33,11 +33,11 @@
                     {{$category->name}}
                 @endforeach
             </td>
-            <td><a href="{{route('games.edit', $game->id)}}">Edit</a></td>
+            <td><a href="{{route('games.edit', $game->id)}}">{{__('Edit')}}</a></td>
             <td><form action="{{route('games.delete',$game->id)}}" method="POST">
                 @csrf
                 @method("DELETE")
-                <button type="submit">Delete</button>
+                <button type="submit">{{__('Delete')}}</button>
             </form></td>
         </tr>
     @endforeach
