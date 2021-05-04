@@ -8,6 +8,7 @@ use App\Models\Plataform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Stripe;
 
 class GameController extends Controller
 {
@@ -205,5 +206,40 @@ class GameController extends Controller
             "state"=> "required|in:mal,regular,bien,como nuevo",
             "published_at" =>"required|date"
         ]);
+    }
+
+    public function payment(){
+        // Enter Your Stripe Secret
+        \Stripe\Stripe::setApiKey('sk_test_51InU3DLE2gDi5g6C6KyJPreWUxEXJmxV90HasKdqgiNo9vrk8TKPmWU3U1x3tBkjeIKCUTJ4zr7Tyq2VR0mS7ewf0031YKoyoq');
+
+		$amount = 100;
+		$amount *= 100;
+        $amount = (int) $amount;
+
+        //CREAMOS UN CUSTOMER
+        $stripe = new \Stripe\StripeClient('sk_test_51InU3DLE2gDi5g6C6KyJPreWUxEXJmxV90HasKdqgiNo9vrk8TKPmWU3U1x3tBkjeIKCUTJ4zr7Tyq2VR0mS7ewf0031YKoyoq');
+
+         $customer = $stripe->customers->create([
+            'name' => 'Pedro jose',
+            'email' => 'pj00@test.com',
+            'description' => 'My First Test Customer (created for API docs)',
+          ]);
+
+          //CREAMOS UN PAGO
+        $payment_intent = \Stripe\PaymentIntent::create([
+			'description' => 'Stripe Test Payment',
+			'amount' => $amount,
+            'customer' => $customer->id,
+			'currency' => 'EUR',
+			'description' => 'Payment From Codehunger',
+			'payment_method_types' => ['card'],
+		]);
+		$intent = $payment_intent->client_secret;
+
+        return view('partials.payment',compact('intent'));
+    }
+
+    public function paymentStore(Request $request, $gameId, $userId){
+        return 'Pago completo!';
     }
 }
