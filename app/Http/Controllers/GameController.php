@@ -8,7 +8,10 @@ use App\Models\Plataform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-use Stripe;
+use Stripe\Stripe;
+use Stripe\Customer;
+use Stripe\Charge;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -216,30 +219,30 @@ class GameController extends Controller
 		$amount *= 100;
         $amount = (int) $amount;
 
-        //CREAMOS UN CUSTOMER
-        $stripe = new \Stripe\StripeClient('sk_test_51InU3DLE2gDi5g6C6KyJPreWUxEXJmxV90HasKdqgiNo9vrk8TKPmWU3U1x3tBkjeIKCUTJ4zr7Tyq2VR0mS7ewf0031YKoyoq');
 
-         $customer = $stripe->customers->create([
-            'name' => 'Pedro jose',
-            'email' => 'pj00@test.com',
-            'description' => 'My First Test Customer (created for API docs)',
-          ]);
 
           //CREAMOS UN PAGO
         $payment_intent = \Stripe\PaymentIntent::create([
 			'description' => 'Stripe Test Payment',
 			'amount' => $amount,
-            'customer' => $customer->id,
+            'customer' => Auth::user()->stripe_id,
 			'currency' => 'EUR',
 			'description' => 'Payment From Codehunger',
 			'payment_method_types' => ['card'],
 		]);
+        $paymentId = $payment_intent->id;
 		$intent = $payment_intent->client_secret;
 
-        return view('partials.payment',compact('intent'));
+        return view('partials.payment', compact('intent', 'paymentId'));
     }
 
-    public function paymentStore(Request $request, $gameId, $userId){
-        return 'Pago completo!';
+    public function paymentStore(Request $request, $paymentId, $gameId, $userId){
+        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        $charge = Charge::create(array(
+            'customer' => Auth::user()->stripe_id,
+            'amount' => 1999,
+            'description' => 'Compra desde Laravel!',
+            'currency' => 'EUR'
+        ));
     }
 }

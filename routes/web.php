@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PlataformController;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\PlataformController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
@@ -65,7 +73,5 @@ Route::delete('/admin/plataforms/{plataform}', [PlataformController::class, 'des
 Route::get(LaravelLocalization::transRoute('routes.payments.index'), [GameController::class, 'payment'])->name('payments.index');
 Route::post(LaravelLocalization::transRoute('routes.payments.store'), [GameController::class, 'paymentStore'])->name('payments.store');
 
-
 });
-
 
