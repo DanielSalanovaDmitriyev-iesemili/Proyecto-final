@@ -17,16 +17,16 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="">
-                    <p>You will be charged rs 100</p>
+                    <p>{{$game->name}}</p>
                 </div>
                 <div class="card">
-                    <form action="{{route('payments.store', [$paymentId,1,1])}}"  method="post" id="payment-form">
+                    <form action="{{route('payments.store', [$game->id, Auth::user()->id])}}"  method="post" id="payment-form">
                         @csrf
 
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="pk_test_51InU3DLE2gDi5g6ClT52alUBX2xqRWufzTY9GW0rxJNxk0dNflmhEPI1vLq6mzavXriEfdXxAwPdFhgH6SsJt3jP00xGMnEb4y"
-                                    data-description="Access for a year"
-                                    data-amount="5000"
+                                    data-description="{{$game->description}}"
+                                    data-amount="{{$game->price * 100}}"
                                     data-locale="auto"></script>
 
                     </form>

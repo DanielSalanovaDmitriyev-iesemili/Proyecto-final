@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Plataform;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -210,39 +211,59 @@ class GameController extends Controller
             "published_at" =>"required|date"
         ]);
     }
-
-    public function payment(){
+    public function payment(Game $game){
         // Enter Your Stripe Secret
-        \Stripe\Stripe::setApiKey('sk_test_51InU3DLE2gDi5g6C6KyJPreWUxEXJmxV90HasKdqgiNo9vrk8TKPmWU3U1x3tBkjeIKCUTJ4zr7Tyq2VR0mS7ewf0031YKoyoq');
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
-		$amount = 100;
+		$amount = $game->price;
 		$amount *= 100;
         $amount = (int) $amount;
 
-
-
-          //CREAMOS UN PAGO
+        //CREAMOS UN PAGO
         $payment_intent = \Stripe\PaymentIntent::create([
-			'description' => 'Stripe Test Payment',
+			'description' => 'Intento de pago de ' . $game->name,
 			'amount' => $amount,
             'customer' => Auth::user()->stripe_id,
 			'currency' => 'EUR',
 			'description' => 'Payment From Codehunger',
 			'payment_method_types' => ['card'],
 		]);
-        $paymentId = $payment_intent->id;
 		$intent = $payment_intent->client_secret;
 
-        return view('partials.payment', compact('intent', 'paymentId'));
+        return view('partials.payment', compact('intent', 'game'));
     }
 
-    public function paymentStore(Request $request, $paymentId, $gameId, $userId){
+    public function paymentStore(Request $request, Game $game, User $user){
         Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient(
+            env('STRIPE_SECRET_KEY')
+          );
+        if(Auth::user()->card_id == null){
+            $card = $stripe->customers->createSource(
+                    Auth::user()->stripe_id,
+                    ['source' => $request->stripeToken]
+             );
+
+             $user->card_id = $card->id;
+             $user->update();
+
+             $cardId = $card->id;
+        }else{
+            $cardId = Auth::user()->card_id;
+        }
+
+        $amount = $game->price;
+		$amount *= 100;
+        $amount = (int) $amount;
+
         $charge = Charge::create(array(
             'customer' => Auth::user()->stripe_id,
-            'amount' => 1999,
-            'description' => 'Compra desde Laravel!',
+            'amount' => $amount,
+            'source' => $cardId,
+            'description' => 'Compra de ' . $game->name,
             'currency' => 'EUR'
         ));
+        $game->users()->attach(Auth::user()->id,['invoice' => $charge->id, 'amount'=> $game->price, 'currency' => $charge->currency]);
+
     }
 }

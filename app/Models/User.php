@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'stripe_id'
+        'stripe_id',
+        'card_id'
     ];
 
     /**
