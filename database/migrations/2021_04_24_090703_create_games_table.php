@@ -34,11 +34,12 @@ class CreateGamesTable extends Migration
             ->on('games')->onDelete('cascade');
         });
         Schema::create('game_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('game_id')->nullable();
-            $table->boolean('is_purchased')->default(false);
-            $table->text('comment', 150)->nullable();
-
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('game_id');
+            $table->string('invoice');
+            $table->double('amount');
+            $table->string('currency');
+            
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('cascade');
             $table->foreign('game_id')->references('id')
