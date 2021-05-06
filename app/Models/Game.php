@@ -5,11 +5,18 @@ namespace App\Models;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
-class Game extends Model
+
+class Game extends Model implements TranslatableContract
 {
-    public $fillable=["name", "description", "img", "pegi", "price", "state", "published_at"];
+    use Translatable;
     use HasFactory;
+
+    public $fillable=["name", "description", "img", "pegi", "price", "state", "published_at"];
+    public $translatedAttributes = ["description"];
+
 
     public function categories () {
         return $this->belongsToMany(Category::class);

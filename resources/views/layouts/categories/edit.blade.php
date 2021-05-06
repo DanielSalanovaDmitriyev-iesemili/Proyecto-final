@@ -8,10 +8,15 @@
         @if($errors->has('name'))
             <p class="text-danger">{{ $errors->first('name')}}</p>
         @endif
-        <label > {{__('Description')}}</label>
-        <input type="text" name="description" value="{{$category->description}}">
-        @if($errors->has('description'))
-            <p class="text-danger">{{ $errors->first('description')}}</p>
+        <label>{{__('Description')}} Español</label>
+        <input type="text" name="description:es" value="{{old("description:es")}}">
+        @if($errors->has('description:es'))
+            <p class="text-danger">{{ $errors->first('description:es')}}</p>
+        @endif
+        <label>{{__('Description')}} English</label>
+        <input type="text" name="description:en" value="{{old("description:en")}}">
+        @if($errors->has('description:en'))
+            <p class="text-danger">{{ $errors->first('description:en')}}</p>
         @endif
         <label>{{__('Image')}}</label>
         <input type="file" name="image">

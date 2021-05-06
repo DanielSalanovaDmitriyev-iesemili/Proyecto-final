@@ -27,18 +27,6 @@ class GameController extends Controller
         $plataforms = Plataform::all();
         $games = Game::paginate(5);
 
-        $firstGame = Game::where('id', 7)->first();
-        $categorias = $firstGame->categories()->get();
-        foreach ($categorias as $categoria){
-            dump('Yei');
-        }
-        // return $categorias[0];
-        // if(isset($categorias[0])){
-        //     return "Vacio";
-        // }else{
-        //     return "No vacio";
-        // }
-        // return $firstGame->plataforms()->get();
         return view('partials.games', compact('games', 'plataforms', 'categories'));
     }
 
@@ -203,7 +191,8 @@ class GameController extends Controller
     public function validateGame(){
         return request()->validate([
             "name" => "required|max:35",
-            "description" => "required|max:150",
+            "description:es" => "required|max:150",
+            "description:en" => "required|max:150",
             "image" => "file|mimes:jpg,png",
             "pegi" => "required|in:3,7,12,16,18",
             "price" => "required|numeric|min:0.5|max:1000.99",

@@ -129,7 +129,8 @@ class CategoryController extends Controller
     {
         return request()->validate([
             'name' => 'required|max:25',
-            'description' => 'required|max:100',
+            "description:es" => "required|max:150",
+            "description:en" => "required|max:150",
             'image' => 'file|mimes:jpg,png'
         ]);
     }

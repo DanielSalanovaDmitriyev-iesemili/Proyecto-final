@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 35);
-            $table->text('description', 150);
+            // $table->text('description', 150);
             $table->string('img', 35);
             $table->enum('pegi', ['3','7','12','16','18']);
             $table->double('price',6,2);
@@ -39,7 +39,7 @@ class CreateGamesTable extends Migration
             $table->string('invoice');
             $table->double('amount');
             $table->string('currency');
-            
+
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('cascade');
             $table->foreign('game_id')->references('id')
