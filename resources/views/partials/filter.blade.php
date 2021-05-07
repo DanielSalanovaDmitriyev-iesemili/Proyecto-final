@@ -18,10 +18,10 @@
     <h5>{{__('State')}}</h5>
     <select name="state" id="state">
         <option value="" selected></option>
-        <option value="mal">Mal</option>
-        <option value="regular">regular</option>
-        <option value="bien">bien</option>
-        <option value="como nuevo">como nuevo</option>
+        <option value="mal">{{__('Bad')}}</option>
+        <option value="regular">{{__('Regular')}}</option>
+        <option value="bien">{{__('Good')}}</option>
+        <option value="como nuevo">{{__('New')}}</option>
     </select>
 
     <h5>{{__('Price')}}</h5>

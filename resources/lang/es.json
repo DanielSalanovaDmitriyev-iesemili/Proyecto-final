@@ -15,6 +15,10 @@
     "Initial Price": "Precio Inicial",
     "End Price": "Precio Final",
     "Search Name": "Buscar Nombre",
-    "Search":"Buscar"
+    "Search":"Buscar",
+    "Bad": "Mal",
+    "Regular": "Regular",
+    "Good": "Bien",
+    "New": "Nuevo"
 
 }

@@ -5,17 +5,17 @@
         @csrf
         @method("PUT")
         <label>{{__('Name')}}</label>
-        <input type="text" name="name" value="{{old("name")}}">
+        <input type="text" name="name" value="{{$game->name}}">
         @if($errors->has('name'))
             <p class="text-danger">{{ $errors->first('name')}}</p>
         @endif
         <label>{{__('Description')}} Español</label>
-        <input type="text" name="description:es" value="{{old("description:es")}}">
+        <input type="text" name="description:es" value="{{$game->translate('es')->description}}">
         @if($errors->has('description:es'))
             <p class="text-danger">{{ $errors->first('description:es')}}</p>
         @endif
         <label>{{__('Description')}} English</label>
-        <input type="text" name="description:en" value="{{old("description:en")}}">
+        <input type="text" name="description:en" value="{{$game->translate('en')->description}}">
         @if($errors->has('description:en'))
             <p class="text-danger">{{ $errors->first('description:en')}}</p>
         @endif

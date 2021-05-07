@@ -18,6 +18,6 @@
         'plataforms.admin.create' => 'administrar/plataformas/crear',
         'plataforms.admin.edit' => 'administrar/plataformas/{plataforma}/editar',
 
-        'payments.index' => 'pago/{game}',
+        'payments.index' => 'pago/{game}/{user}',
         'payments.store' => 'pago/{game}/{user}/guardar'
     ];

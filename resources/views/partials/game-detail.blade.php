@@ -9,13 +9,9 @@
         <label>{{$game->published}}</label>
     </div>
     <div>
-        @if(Auth::check())
         <div class="nav-item">
             <a href="{{route('payments.index', [$game->id, Auth::user()->id])}}">Comprar</a>
         </div>
-        @else
-            <a href="{{route('login')}}">Logueate para comprar!</a>
-        @endif
     </div>
 </div>
 @endsection

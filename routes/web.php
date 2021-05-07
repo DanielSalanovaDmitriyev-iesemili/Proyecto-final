@@ -70,8 +70,8 @@ Route::put('/admin/plataforms/{plataform}', [PlataformController::class, 'update
 Route::delete('/admin/plataforms/{plataform}', [PlataformController::class, 'destroy'])->name('plataforms.delete');
 
 //PAGOS
-Route::get(LaravelLocalization::transRoute('routes.payments.index'), [GameController::class, 'payment'])->name('payments.index');
-Route::post(LaravelLocalization::transRoute('routes.payments.store'), [GameController::class, 'paymentStore'])->name('payments.store');
+Route::get(LaravelLocalization::transRoute('routes.payments.index'), [GameController::class, 'payment'])->name('payments.index')->middleware('auth');
+Route::post(LaravelLocalization::transRoute('routes.payments.store'), [GameController::class, 'paymentStore'])->name('payments.store')->middleware('auth');
 
 });
 
