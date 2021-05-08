@@ -7,10 +7,25 @@
     <div>
         <label>{{$game->pegi}} | {{$game->price}} | {{$game->state}}</label>
         <label>{{$game->published}}</label>
+        <div>
+            @foreach ($game->plataforms()->get() as $plataform)
+                {{$plataform->name}}
+            @endforeach
+        </div>
+        <div>
+            @foreach ($game->categories()->get() as $category)
+                {{$category->name}}
+            @endforeach
+        </div>
     </div>
     <div>
-        <div class="nav-item">
-            <a href="{{route('payments.index', [$game->id, Auth::user()->id])}}">Comprar</a>
+        @if (Auth::check())
+            <div class="nav-item">
+                <a href="{{route('payments.index', [$game->id, Auth::user()->id])}}">Comprar</a>
+            </div>
+        @endif
+        <div>
+            Logueate para comprar!
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
     <select name="plataform" id="plataform">
         <option value="" selected></option>
         @foreach ($plataforms as $plataform)
-            <option value="{{$plataform->name}}">{{$plataform->name}}</option>
+            <option value="{{$plataform->id}}">{{$plataform->name}}</option>
         @endforeach
     </select>
 
@@ -11,7 +11,7 @@
     <select name="genre" id="genre">
         <option value="" selected></option>
         @foreach ($categories as $category)
-            <option value="{{$category->name}}">{{$category->name}}</option>
+            <option value="{{$category->id}}">{{$category->name}}</option>
         @endforeach
     </select>
 

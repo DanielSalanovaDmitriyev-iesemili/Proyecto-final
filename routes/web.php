@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlataformController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +32,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 Route::get(LaravelLocalization::transRoute('routes.games.index'), [GameController::class, 'index'])->name('games.index');
 Route::get(LaravelLocalization::transRoute('routes.games.show'), [GameController::class, 'show'])->name('games.show');
 Route::get(LaravelLocalization::transRoute('routes.games.categoryFilter'), [GameController::class, 'categoryFilter'])->name('games.category');
-Route::get(LaravelLocalization::transRoute('routes.filter'), [GameController::class, 'filter'])->name('games.filter');
+Route::get(LaravelLocalization::transRoute('routes.games.filter'), [GameController::class, 'filter'])->name('games.filter');
 
 Route::get(LaravelLocalization::transRoute('routes.games.admin.list'), [GameController::class, 'gameList'])->name('games.admin.list');
 Route::get(LaravelLocalization::transRoute('routes.games.admin.create'), [GameController::class, 'create'])->name('games.create');
@@ -70,8 +71,8 @@ Route::put('/admin/plataforms/{plataform}', [PlataformController::class, 'update
 Route::delete('/admin/plataforms/{plataform}', [PlataformController::class, 'destroy'])->name('plataforms.delete');
 
 //PAGOS
-Route::get(LaravelLocalization::transRoute('routes.payments.index'), [GameController::class, 'payment'])->name('payments.index')->middleware('auth');
-Route::post(LaravelLocalization::transRoute('routes.payments.store'), [GameController::class, 'paymentStore'])->name('payments.store')->middleware('auth');
+Route::get(LaravelLocalization::transRoute('routes.payments.index'), [PaymentController::class, 'payment'])->name('payments.index')->middleware('auth');
+Route::post(LaravelLocalization::transRoute('routes.payments.store'), [PaymentController::class, 'paymentStore'])->name('payments.store')->middleware('auth');
 
 });
 
