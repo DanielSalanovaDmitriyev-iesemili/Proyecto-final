@@ -51,4 +51,7 @@ class User extends Authenticatable
     public function minigames () {
         return $this->belongsToMany(Minigame::class);
     }
+    public function rooms () {
+        return $this->belongsToMany(Room::class)->withPivot('message');
+    }
 }

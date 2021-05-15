@@ -19,5 +19,7 @@
         'plataforms.admin.edit' => 'admin/plataforms/{plataform}/edit',
 
         'payments.index' => 'payment/{game}/{user}',
-        'payments.store' => 'payment/{game}/{user}/store'
+        'payments.store' => 'payment/{game}/{user}/store',
+
+        'chat.index' => 'chat',
     ];

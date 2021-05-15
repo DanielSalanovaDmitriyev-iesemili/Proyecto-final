@@ -5,6 +5,8 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlataformController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RoomController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,6 +75,9 @@ Route::delete('/admin/plataforms/{plataform}', [PlataformController::class, 'des
 //PAGOS
 Route::get(LaravelLocalization::transRoute('routes.payments.index'), [PaymentController::class, 'payment'])->name('payments.index')->middleware('auth');
 Route::post(LaravelLocalization::transRoute('routes.payments.store'), [PaymentController::class, 'paymentStore'])->name('payments.store')->middleware('auth');
+
+//CHAT
+Route::get(LaravelLocalization::transRoute('routes.chat.index'), [RoomController::class, 'index'])->name('chat.index');
 
 });
 
