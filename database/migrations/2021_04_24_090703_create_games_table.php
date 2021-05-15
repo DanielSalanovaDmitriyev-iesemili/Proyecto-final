@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 35);
-            $table->text('description', 150);
+            // $table->text('description', 150);
             $table->string('img', 35);
             $table->enum('pegi', ['3','7','12','16','18']);
             $table->double('price',6,2);
@@ -29,20 +29,21 @@ class CreateGamesTable extends Migration
             $table->unsignedBigInteger('game_id')->nullable();
             $table->unique(['category_id', 'game_id']);
             $table->foreign('category_id')->references('id')
-            ->on('categories')->onDelete('set null');
+            ->on('categories')->onDelete('cascade');
             $table->foreign('game_id')->references('id')
-            ->on('games')->onDelete('set null');
+            ->on('games')->onDelete('cascade');
         });
         Schema::create('game_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('game_id')->nullable();
-            $table->boolean('is_purchased')->default(false);
-            $table->text('comment', 150)->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('game_id');
+            $table->string('invoice');
+            $table->double('amount');
+            $table->string('currency');
 
             $table->foreign('user_id')->references('id')
-            ->on('users')->onDelete('set null');
+            ->on('users')->onDelete('cascade');
             $table->foreign('game_id')->references('id')
-            ->on('games')->onDelete('set null');
+            ->on('games')->onDelete('cascade');
         });
     }
 

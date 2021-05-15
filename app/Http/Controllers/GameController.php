@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Plataform;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Stripe\Stripe;
+use Stripe\Customer;
+use Stripe\Charge;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -34,17 +39,13 @@ class GameController extends Controller
      public function filter (Request $request, Game $game) {
         $game = $game->newQuery();
 
-         if(!$request->plataform == null) {
-            $game->whereHas('plataforms', function ($query) use ($request){
-             $query->where('name', $request->plataform);
+        if(!$request->plataform == null) {
+            $game->filterPlataform($request->plataform);
+        }
 
-         });}
-
-         if(!$request->genre == null) {
-             $game->whereHas('categories', function ($query) use ($request){
-             $query->where('name', $request->genre);
-
-          });}
+        if(!$request->genre == null) {
+            $game->filterGenre($request->genre);
+        }
 
         if(!$request->iniPrice == null && !$request->endPrice == null) {
             $game->where('price', '>=',  $request->iniPrice);
@@ -52,11 +53,11 @@ class GameController extends Controller
          }
 
         if(!$request->state == null) {
-            $game->where('state',$request->state);
+            $game->filterState($request->state);
         }
 
         if(!$request->title == null) {
-            $game->where('name','LIKE', '%' . $request->title . '%');
+            $game->filterName($request->title);
         }
         $plataforms = Plataform::all();
         $categories = Category::all();
@@ -80,6 +81,14 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            ['image' => $_FILES["image"]["name"]],
+            ['image' => 'max:35']);
+        if ( $validator->fails() )
+        {
+            return Redirect::back()->withErrors($validator);
+        }
+        
         $imagenTemporal = $_FILES["image"]["tmp_name"];
         $fullImgPath ="img/".$_FILES["image"]["name"];
 
@@ -138,32 +147,24 @@ class GameController extends Controller
             {
                 return Redirect::back()->withErrors($validator);
             }
+
             $imagenTemporal = $_FILES["image"]["tmp_name"];
             $fullImgPath ="img/".$_FILES["image"]["name"];
 
             $game->img = $fullImgPath;
 
-            $game->plataforms()->detach();
-            $game->plataforms()->attach(request('plataforms'));
-            $game->categories()->detach();
-            $game->categories()->attach(request('categories'));
+           $this->addPlataformsCategoriesAndValidate($game);
 
-            $game->update($this->validateGame());
             move_uploaded_file($imagenTemporal, $fullImgPath);
             $fp = fopen($fullImgPath, 'r+b');
             fclose($fp);
         }else{
-            $game->plataforms()->detach();
-            $game->plataforms()->attach(request('plataforms'));
-            $game->categories()->detach();
-            $game->categories()->attach(request('categories'));
-
-            $game->update($this->validateGame());
+            $this->addPlataformsCategoriesAndValidate($game);
         }
-
-
         return redirect()->route('games.admin.list');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -186,12 +187,20 @@ class GameController extends Controller
     public function validateGame(){
         return request()->validate([
             "name" => "required|max:35",
-            "description" => "required|max:150",
+            "description:es" => "required|max:150",
+            "description:en" => "required|max:150",
             "image" => "file|mimes:jpg,png",
             "pegi" => "required|in:3,7,12,16,18",
             "price" => "required|numeric|min:0.5|max:1000.99",
             "state"=> "required|in:mal,regular,bien,como nuevo",
             "published_at" =>"required|date"
         ]);
+    }
+    function addPlataformsCategoriesAndValidate(Game $game){
+        $game->plataforms()->detach();
+        $game->plataforms()->attach(request('plataforms'));
+        $game->categories()->detach();
+        $game->categories()->attach(request('categories'));
+        $game->update($this->validateGame());
     }
 }

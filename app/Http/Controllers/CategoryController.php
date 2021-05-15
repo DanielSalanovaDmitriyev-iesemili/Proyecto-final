@@ -37,7 +37,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
+        $validator = Validator::make(
+            ['image' => $_FILES["image"]["name"]],
+            ['image' => 'max:35']);
+        if ( $validator->fails() )
+        {
+            return Redirect::back()->withErrors($validator);
+        }
+        
         $imagenTemporal = $_FILES["image"]["tmp_name"];
         $fullImgPath ="img/".$_FILES["image"]["name"];
 
@@ -91,6 +98,7 @@ class CategoryController extends Controller
             {
                 return Redirect::back()->withErrors($validator);
             }
+
             $imagenTemporal = $_FILES["image"]["tmp_name"];
             $fullImgPath ="img/".$_FILES["image"]["name"];
 
@@ -100,11 +108,10 @@ class CategoryController extends Controller
             move_uploaded_file($imagenTemporal, $fullImgPath);
             $fp = fopen($fullImgPath, 'r+b');
             fclose($fp);
-            return redirect()->route('categories.admin.list');
         }else{
             $category->update($this->validateCategory());
-            return redirect()->route('categories.admin.list');
         }
+        return redirect()->route('categories.admin.list');
     }
 
     /**
@@ -129,7 +136,8 @@ class CategoryController extends Controller
     {
         return request()->validate([
             'name' => 'required|max:25',
-            'description' => 'required|max:100',
+            "description:es" => "required|max:150",
+            "description:en" => "required|max:150",
             'image' => 'file|mimes:jpg,png'
         ]);
     }

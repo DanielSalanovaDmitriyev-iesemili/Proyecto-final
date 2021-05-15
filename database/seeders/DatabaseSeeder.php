@@ -21,16 +21,19 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Game::factory(50)->create();
         \App\Models\Category::factory(20)->create();
         \App\Models\Plataform::factory(6)->create();
-
+        \App\Models\Game::factory(10)->create();
+        \App\Models\User::factory(5)->create();
+        
         $faker = Factory::create();
         $categories = Category::all();
         $plataforms = Plataform::all();
 
-        Game::factory(10)->hasAttached(User::factory()->count(2),
-        [
-            'is_purchased' => $faker->randomElement([true, false]),
-            'comment' => $faker->paragraph(3)
-        ])->create();
+
+        // Game::factory(10)->hasAttached(User::factory()->count(2),
+        // [
+        //     'is_purchased' => $faker->randomElement([true, false]),
+        //     'comment' => $faker->paragraph(3)
+        // ])->create();
 
         Game::all()->each(function ($game) use ($categories) {
             $game->categories()->attach(

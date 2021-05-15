@@ -2,22 +2,27 @@
 @section('content')
     <form action="{{route('games.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
-        <label>Name</label>
+        <label>{{__('Name')}}</label>
         <input type="text" name="name" value="{{old("name")}}">
         @if($errors->has('name'))
             <p class="text-danger">{{ $errors->first('name')}}</p>
         @endif
-        <label > Description</label>
-        <input type="text" name="description" value="{{old("description")}}">
-        @if($errors->has('description'))
-            <p class="text-danger">{{ $errors->first('description')}}</p>
+        <label>{{__('Description')}} Español</label>
+        <input type="text" name="description:es" value="{{old("description:es")}}">
+        @if($errors->has('description:es'))
+            <p class="text-danger">{{ $errors->first('description:es')}}</p>
         @endif
-        <label>Price</label>
+        <label>{{__('Description')}} English</label>
+        <input type="text" name="description:en" value="{{old("description:en")}}">
+        @if($errors->has('description:en'))
+            <p class="text-danger">{{ $errors->first('description:en')}}</p>
+        @endif
+        <label>{{__('Price')}}</label>
         <input type="number" name="price" step="0.01" value="{{old("price")}}">
         @if($errors->has('price'))
             <p class="text-danger">{{ $errors->first('price')}}</p>
         @endif
-        <label >Image</label>
+        <label>{{__('Image')}}</label>
         <input type="file" name="image" required>
         @if($errors->has('image'))
             <p class="text-danger">{{ $errors->first('image')}}</p>
@@ -33,7 +38,7 @@
         @if($errors->has('pegi'))
             <p class="text-danger">{{ $errors->first('pegi')}}</p>
         @endif
-        <label>Plataforms</label>
+        <label>{{__('Plataforms')}}</label>
         <select name="plataforms[]" multiple required>
             @foreach ($plataforms as $plataform)
                 <option value="{{$plataform->id}}">{{$plataform->name}}</option>
@@ -43,7 +48,7 @@
             <p class="text-danger">{{ $errors->first('plataforms')}}</p>
         @endif
 
-        <label>Genres</label>
+        <label>{{__('Genres')}}</label>
         <select name="categories[]" multiple required>
             @foreach ($categories as $category)
                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -53,7 +58,7 @@
             <p class="text-danger">{{ $errors->first('categories')}}</p>
         @endif
 
-        <label>Estado</label>
+        <label>{{__('State')}}</label>
         <select name="state">
             <option value="mal">mal</option>
             <option value="regular">regular</option>
@@ -64,13 +69,13 @@
             <p class="text-danger">{{ $errors->first('state')}}</p>
         @endif
 
-        <label>Published at</label>
+        <label>{{__('Published at')}}</label>
         <input type="date"name="published_at"
             value="2021-04-22"
             min="1970-01-01" max="2021-12-31">
         @if($errors->has('date'))
             <p class="text-danger">{{ $errors->first('date')}}</p>
         @endif
-        <button type="submit">Submit</button>
+        <button type="submit">{{__('Submit')}}</button>
     </form>
 @endsection

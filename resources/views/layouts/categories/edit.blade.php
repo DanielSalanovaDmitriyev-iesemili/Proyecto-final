@@ -3,21 +3,26 @@
     <form action="{{route('categories.update', $category->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method("PUT")
-        <label > Name</label>
+        <label >  {{__('Name')}}</label>
         <input type="text" name="name" value="{{$category->name}}">
         @if($errors->has('name'))
             <p class="text-danger">{{ $errors->first('name')}}</p>
         @endif
-        <label > Description</label>
-        <input type="text" name="description" value="{{$category->description}}">
-        @if($errors->has('description'))
-            <p class="text-danger">{{ $errors->first('description')}}</p>
+        <label>{{__('Description')}} Español</label>
+        <input type="text" name="description:es" value="{{$category->translate('es')->description}}">
+        @if($errors->has('description:es'))
+            <p class="text-danger">{{ $errors->first('description:es')}}</p>
         @endif
-        <label>Image</label>
+        <label>{{__('Description')}} English</label>
+        <input type="text" name="description:en" value="{{$category->translate('en')->description}}">
+        @if($errors->has('description:en'))
+            <p class="text-danger">{{ $errors->first('description:en')}}</p>
+        @endif
+        <label>{{__('Image')}}</label>
         <input type="file" name="image">
         @if($errors->has('image'))
             <p class="text-danger">{{ $errors->first('image')}}</p>
         @endif
-        <button type="submit">Submit</button>
+        <button type="submit">{{__('Submit')}}</button>
     </form>
 @endsection
