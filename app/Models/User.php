@@ -52,6 +52,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Minigame::class);
     }
     public function rooms () {
-        return $this->belongsToMany(Room::class)->withPivot('message');
+        return $this->belongsToMany(Room::class)->withPivot('receiver_id','message');
+    }
+    public function rol () {
+        return $this->belongsTo(Rol::class);
     }
 }

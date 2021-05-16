@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class Rol extends Model
 {
     use HasFactory;
 
-    public function users() {
-        return $this->belongsToMany(User::class)->withPivot('receiver_id', 'message');
+    public function users () {
+        return $this->hasMany(User::class);
     }
 }

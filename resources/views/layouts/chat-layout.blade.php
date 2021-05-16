@@ -7,7 +7,7 @@
     <title>Chat</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     @livewireStyles
     @livewireScripts
 </head>

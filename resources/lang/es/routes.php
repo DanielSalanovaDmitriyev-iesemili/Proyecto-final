@@ -21,5 +21,5 @@
         'payments.index' => 'pago/{game}/{user}',
         'payments.store' => 'pago/{game}/{user}/guardar',
 
-        'chat.index' => 'chat',
+        'chat.index' => 'chat/{user}',
     ];
