@@ -21,5 +21,10 @@
         'payments.index' => 'payment/{game}/{user}',
         'payments.store' => 'payment/{game}/{user}/store',
 
+        'chat.list' => 'chat/list',
         'chat.index' => 'chat/{user}',
+
+        'mail.index' => 'contact',
+        'mail.store' => 'contact/store',
+
     ];

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlataformController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RoomController;
 
@@ -77,7 +78,13 @@ Route::get(LaravelLocalization::transRoute('routes.payments.index'), [PaymentCon
 Route::post(LaravelLocalization::transRoute('routes.payments.store'), [PaymentController::class, 'paymentStore'])->name('payments.store')->middleware('auth');
 
 //CHAT
+Route::get(LaravelLocalization::transRoute('routes.chat.list'), [RoomController::class, 'list'])->name('chat.list');
 Route::get(LaravelLocalization::transRoute('routes.chat.index'), [RoomController::class, 'index'])->name('chat.index');
+
+
+//Mail
+Route::post(LaravelLocalization::transRoute('routes.mail.store'), [ContactController::class, 'store'])->name('mail.store');
+Route::get(LaravelLocalization::transRoute('routes.mail.index'), [ContactController::class, 'index'])->name('mail.index');
 
 });
 
