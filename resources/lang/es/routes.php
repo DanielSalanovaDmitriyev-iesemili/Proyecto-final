@@ -27,4 +27,5 @@
         'mail.index' => 'contacto',
         'mail.store' => 'contacto/guardar',
 
+        'comment.index' => 'comentarios'
     ];

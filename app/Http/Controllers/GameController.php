@@ -68,6 +68,9 @@ class GameController extends Controller
 
     public function create()
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $plataforms = Plataform::all();
         $categories = Category::all();
         return view("layouts.games.create", compact("plataforms", "categories"));
@@ -81,6 +84,9 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $validator = Validator::make(
             ['image' => $_FILES["image"]["name"]],
             ['image' => 'max:35']);
@@ -88,7 +94,7 @@ class GameController extends Controller
         {
             return Redirect::back()->withErrors($validator);
         }
-        
+
         $imagenTemporal = $_FILES["image"]["tmp_name"];
         $fullImgPath ="img/".$_FILES["image"]["name"];
 
@@ -113,7 +119,8 @@ class GameController extends Controller
     {
         $plataforms = Plataform::all();
         $categories = Category::all();
-        return view('partials.game-detail', compact('game', 'plataforms', 'categories'));
+        $comments = $game->comments()->get();
+        return view('partials.game-detail', compact('game', 'plataforms', 'categories', 'comments'));
     }
 
     /**
@@ -124,6 +131,9 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $plataforms = Plataform::all();
         $categories = Category::all();
         return view("layouts.games.edit", compact("plataforms", "categories", "game"));
@@ -138,7 +148,9 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         if(!$_FILES["image"]["name"] == null){
             $validator = Validator::make(
                 ['image' => $_FILES["image"]["name"]],
@@ -174,15 +186,24 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $game->delete();
         return redirect()->route('games.admin.list');
     }
 
     public function gameList ()
     {
+
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $games = Game::paginate(20);
         return view('layouts.games.list', compact('games'));
     }
+
+
 
     public function validateGame(){
         return request()->validate([
@@ -203,4 +224,12 @@ class GameController extends Controller
         $game->categories()->attach(request('categories'));
         $game->update($this->validateGame());
     }
+
+    function admin() {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
+    }
+
+
 }

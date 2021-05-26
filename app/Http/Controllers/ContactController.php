@@ -27,7 +27,7 @@ class ContactController extends Controller
         ->subject($subject);
         $message->from($email, $name . ' ' .$surname);
             });
-        return redirect()->route("news_index");
+        return redirect()->route("mail.index");
     }
 
     public function validateContact()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Plataform;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlataformController extends Controller
 {
@@ -25,6 +26,9 @@ class PlataformController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         return view('layouts.plataforms.create');
     }
 
@@ -36,6 +40,9 @@ class PlataformController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $plataform = new Plataform ($this->validatePlataform());
         $plataform->save();
         return redirect()->route('plataforms.admin.list');
@@ -60,6 +67,9 @@ class PlataformController extends Controller
      */
     public function edit(Plataform $plataform)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         return view('layouts.plataforms.edit', compact('plataform'));
     }
 
@@ -72,6 +82,9 @@ class PlataformController extends Controller
      */
     public function update(Request $request, Plataform $plataform)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $plataform->update($this->validatePlataform());
         return redirect()->route("plataforms.admin.list");
     }
@@ -84,12 +97,18 @@ class PlataformController extends Controller
      */
     public function destroy(Plataform $plataform)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $plataform->delete();
         return redirect()->route('plataforms.admin.list');
     }
 
     public function plataformList ()
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $plataforms = Plataform::paginate(20);
         return view('layouts.plataforms.list', compact('plataforms'));
     }

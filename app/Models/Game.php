@@ -33,6 +33,10 @@ class Game extends Model implements TranslatableContract
         return $this->belongsToMany(Plataform::class);
     }
 
+    public function comments () {
+        return $this->hasMany(Comment::class);
+    }
+
     //Comprobar si un objeto esta vacio
 
     public function checkIfEmpty($obj){

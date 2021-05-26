@@ -27,4 +27,6 @@
         'mail.index' => 'contact',
         'mail.store' => 'contact/store',
 
+        'comment.index' => 'comments'
+
     ];
