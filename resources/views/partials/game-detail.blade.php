@@ -28,5 +28,21 @@
             Logueate para comprar!
         </div>
     </div>
+    <div>
+        <h1>Comentarios!</h1>
+        <form action="{{route('comment.store', $game->id)}}" method="POST">
+            @csrf
+            <textarea id="" cols="30" rows="10" name="message"></textarea>
+            <button type="submit">Comentar</button>
+        </form>
+        <div>
+            @foreach ($comments as $comment)
+                <div>
+                    <label>{{$comment->user_name}}: {{$comment->message}}</label>
+                </div>
+            @endforeach
+        </div>
+
+    </div>
 </div>
 @endsection

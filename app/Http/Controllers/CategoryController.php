@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -26,6 +27,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         return view('layouts.categories.create');
     }
 
@@ -37,6 +41,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $validator = Validator::make(
             ['image' => $_FILES["image"]["name"]],
             ['image' => 'max:35']);
@@ -44,7 +51,7 @@ class CategoryController extends Controller
         {
             return Redirect::back()->withErrors($validator);
         }
-        
+
         $imagenTemporal = $_FILES["image"]["tmp_name"];
         $fullImgPath ="img/".$_FILES["image"]["name"];
 
@@ -77,6 +84,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         return view("layouts.categories.edit", compact("category"));
     }
 
@@ -89,7 +99,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         if(!$_FILES["image"]["name"] == null){
             $validator = Validator::make(
                 ['image' => $_FILES["image"]["name"]],
@@ -122,12 +134,18 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $category->delete();
         return redirect()->route('categories.admin.list');
     }
 
     function categoryList ()
     {
+        if(Auth::user()->rol_id != 1) {
+            return redirect()->route('games.index');
+        }
         $categories = Category::paginate(20);
         return view('layouts.categories.list', compact('categories'));
     }

@@ -51,4 +51,13 @@ class User extends Authenticatable
     public function minigames () {
         return $this->belongsToMany(Minigame::class);
     }
+    public function rooms () {
+        return $this->belongsToMany(Room::class)->withPivot('receiver_id','message');
+    }
+    public function rol () {
+        return $this->belongsTo(Rol::class);
+    }
+    public function comments () {
+        return $this->hasMany(Comment::class);
+    }
 }

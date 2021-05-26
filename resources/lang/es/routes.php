@@ -19,5 +19,13 @@
         'plataforms.admin.edit' => 'administrar/plataformas/{plataforma}/editar',
 
         'payments.index' => 'pago/{game}/{user}',
-        'payments.store' => 'pago/{game}/{user}/guardar'
+        'payments.store' => 'pago/{game}/{user}/guardar',
+
+        'chat.list' => 'chat/lista',
+        'chat.index' => 'chat/{user}',
+
+        'mail.index' => 'contacto',
+        'mail.store' => 'contacto/guardar',
+
+        'comment.index' => 'comentarios'
     ];
