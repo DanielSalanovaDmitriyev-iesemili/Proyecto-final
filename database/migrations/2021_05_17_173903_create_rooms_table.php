@@ -19,6 +19,7 @@ class CreateRoomsTable extends Migration
             $table->timestamps();
         });
         Schema::create('room_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('receiver_id');

@@ -23,7 +23,11 @@ class ChatForm extends Component
 
         $this->user_id = Auth::user()->id;
         $this->name = Auth::user()->name;
-        $this->room_id = 1;
+        if(Auth::user()->id == $this->receiver_id){
+            $this->room_id = 2;
+        }else{
+            $this->room_id = 1;
+        }
         $this->message = '';
     }
     public function render()
@@ -42,17 +46,21 @@ class ChatForm extends Component
         // Guardaremos el mensaje en BD
 
         $this->emit("messageSent");
-        $room = Room::first();
+        $room = Room::where('id', $this->room_id)->first();
         $currentUser = Auth::user()->rol()->get('name');
         $currentRol = $currentUser[0]->name;
+        if(Auth::user()->id == $this->receiver_id) {
+            $room->users()->attach([$this->user_id => ['message' => $this->message]]);
+        }else{
+            if($currentRol == 'client') {
+                $chatAdmin = User::where('rol_id', 3)->first();
+                $room->users()->attach([$this->user_id => ['receiver_id' => $chatAdmin->id,'message' => $this->message]]);
+            }
+            if($currentRol == 'chat'){
+                $room->users()->attach([$this->user_id => ['receiver_id' => $this->receiver_id, 'message' => $this->message]]);
+            }
+        }
 
-        if($currentRol == 'client') {
-            $chatAdmin = User::where('rol_id', 3)->first();
-            $room->users()->attach([$this->user_id => ['receiver_id' => $chatAdmin->id,'message' => $this->message]]);
-        }
-        if($currentRol == 'chat'){
-            $room->users()->attach([$this->user_id => ['receiver_id' => $this->receiver_id, 'message' => $this->message]]);
-        }
 
         // Creamos un evento para vincularlo al componente de
         // ChatList, así una vez enviado el mensaje recargamos

@@ -10,8 +10,11 @@
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     @livewireStyles
     @livewireScripts
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
+    @include('partials.header')
+    @include('partials.menu')
     @yield('content')
 </body>
 </html>

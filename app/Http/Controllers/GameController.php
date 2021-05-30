@@ -25,7 +25,7 @@ class GameController extends Controller
     {
         $categories = Category::all();
         $plataforms = Plataform::all();
-        $games = Game::paginate(5);
+        $games = Game::paginate(6);
 
         return view('partials.games', compact('games', 'plataforms', 'categories'));
     }
@@ -61,7 +61,7 @@ class GameController extends Controller
         }
         $plataforms = Plataform::all();
         $categories = Category::all();
-        $games = $game->paginate(5);
+        $games = $game->paginate(6);
 
         return view('partials.games', compact('games', 'plataforms', 'categories'));
      }
@@ -119,7 +119,7 @@ class GameController extends Controller
     {
         $plataforms = Plataform::all();
         $categories = Category::all();
-        $comments = $game->comments()->get();
+        $comments = $game->comments()->orderBy('created_at', 'desc')->get();
         return view('partials.game-detail', compact('game', 'plataforms', 'categories', 'comments'));
     }
 
@@ -203,7 +203,23 @@ class GameController extends Controller
         return view('layouts.games.list', compact('games'));
     }
 
+    public function categoryFilter(Category $category)
+    {
+        $games = Category::where('id', $category->id)->first()->games()->paginate(6);
+        $categories = Category::all();
+        $plataforms = Plataform::all();
 
+        return view('partials.games', compact('games', 'plataforms', 'categories'));
+    }
+
+    public function plataformFilter(Plataform $plataform)
+    {
+        $games = Plataform::where('id', $plataform->id)->first()->games()->paginate(6);
+        $categories = Category::all();
+        $plataforms = Plataform::all();
+
+        return view('partials.games', compact('games', 'plataforms', 'categories'));
+    }
 
     public function validateGame(){
         return request()->validate([

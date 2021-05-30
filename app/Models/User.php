@@ -60,4 +60,11 @@ class User extends Authenticatable
     public function comments () {
         return $this->hasMany(Comment::class);
     }
+    public function checkIfEmpty($obj){
+        foreach ($obj as $item){
+            return false;
+        }
+
+        return true;
+    }
 }

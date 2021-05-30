@@ -16,19 +16,27 @@ class ChatList extends Component
     public function mount()  {
         //Inicializamos los mensajes de la primera sala
         $this->messages = [];
-        $messages = Room::first();
-
-        //Cliente
-        if(Auth::user()->rol_id == 2) {
-            $chatAdmin = User::where('rol_id', 3)->first();
-            $this->receiver_id = $chatAdmin->id;
-            $this->messages = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id)->get();
-        }
-        //Admin chat
-        else{
-            $this->messages = $messages->users()->wherePivot('user_id', $this->receiver_id)->orWherePivot('receiver_id',$this->receiver_id)->get();
+        if(Auth::user()->id == $this->receiver_id){
+            $messages = Room::where('id',2)->first();
+        }else{
+            $messages = Room::where('id',1)->first();
         }
 
+        //Chat publico
+        if($this->receiver_id == Auth::user()->id){
+            $this->messages = $messages->users()->wherePivotNull('receiver_id')->get();
+        }else{
+            //Cliente
+            if(Auth::user()->rol_id == 2) {
+                $chatAdmin = User::where('rol_id', 3)->first();
+                $this->receiver_id = $chatAdmin->id;
+                $this->messages = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id)->get();
+            }
+            //Admin chat
+            else{
+                $this->messages = $messages->users()->wherePivot('user_id', $this->receiver_id)->orWherePivot('receiver_id',$this->receiver_id)->get();
+            }
+        }
 
     }
     public function render()
@@ -38,14 +46,21 @@ class ChatList extends Component
 
     public function messageReceived ($message) {
         // Haremos una select con todos los mensajes de dicha sala
-        $messages = Room::first();
-        //Cliente
-        if(Auth::user()->rol_id == 2) {
-            $this->messages = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id)->get();
-        }
-        //Admin chat
-        else{
-            $this->messages = $messages->users()->wherePivot('user_id', $this->receiver_id)->orWherePivot('receiver_id',$this->receiver_id)->get();
+
+        //Chat publico
+        if(Auth::user()->id == $this->receiver_id){
+            $messages = Room::where('id',2)->first();
+            $this->messages = $messages->users()->wherePivotNull('receiver_id')->get();
+        }else{
+            $messages = Room::where('id',1)->first();
+            //Cliente
+            if(Auth::user()->rol_id == 2) {
+                $this->messages = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id)->get();
+            }
+            //Admin chat
+            else{
+                $this->messages = $messages->users()->wherePivot('user_id', $this->receiver_id)->orWherePivot('receiver_id',$this->receiver_id)->get();
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
 {
@@ -66,6 +67,6 @@ class PaymentController extends Controller
             'currency' => 'EUR'
         ));
         $game->users()->attach(Auth::user()->id,['invoice' => $charge->id, 'amount'=> $game->price, 'currency' => $charge->currency]);
-
+        return redirect()->route('games.index')->with('payment', 'Pago completado!');
     }
 }

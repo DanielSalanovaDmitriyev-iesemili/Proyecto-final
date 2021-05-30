@@ -2,7 +2,8 @@
     return [
         'games.index' => "games",
         'games.show' => "games/{game}",
-        'games.categoryFilter' => 'games/category/{name}',
+        'games.categoryFilter' => 'games/category/{category}',
+        'games.plataformFilter' => 'games/plataform/{plataform}',
         'games.filter' => 'filter',
         'games.admin.list' => 'admin/games',
         'games.admin.create' => 'admin/games/create',
@@ -22,7 +23,7 @@
         'payments.store' => 'payment/{game}/{user}/store',
 
         'chat.list' => 'chat/list',
-        'chat.index' => 'chat/{user}',
+        'chat.index' => 'chat/{id}',
 
         'mail.index' => 'contact',
         'mail.store' => 'contact/store',

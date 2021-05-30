@@ -14,7 +14,7 @@ class CommentController extends Controller
         if(Auth::user()->rol_id != 1) {
             return redirect()->route('games.index');
         }
-        $comments = Comment::orderBy('created_at', 'asc')->paginate(10);
+        $comments = Comment::orderBy('created_at', 'desc')->paginate(10);
         return view('partials.comment', compact('comments'));
     }
 
@@ -33,6 +33,6 @@ class CommentController extends Controller
         $comment->user_name = Auth::user()->name;
         $comment->save();
 
-        return redirect()->route('games.show', $game->id);
+        return redirect()->route('games.show', $game->id)->with('comment-detail', 'Comentario enviado correctamente!');;
     }
 }

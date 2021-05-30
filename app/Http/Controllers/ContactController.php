@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,7 @@ class ContactController extends Controller
         ->subject($subject);
         $message->from($email, $name . ' ' .$surname);
             });
+        Session::flash('success', 'Correo enviado correctamente');
         return redirect()->route("mail.index");
     }
 

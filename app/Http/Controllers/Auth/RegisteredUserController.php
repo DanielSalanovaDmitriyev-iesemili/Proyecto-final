@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -58,6 +59,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        if(Lang::getLocale() == 'es'){
+            return redirect('/es/juegos');
+         }else{
+             return redirect('/en/games');
+         }
+        // return redirect()->route('games.index');
+        // return redirect(RouteServiceProvider::HOME);
     }
 }

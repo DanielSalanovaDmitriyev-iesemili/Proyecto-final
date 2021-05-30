@@ -2,7 +2,8 @@
     return [
         'games.index' => "juegos",
         'games.show' => "juegos/{game}",
-        'games.categoryFilter' => '/juegos/categoria/{name}',
+        'games.categoryFilter' => '/juegos/categoria/{category}',
+        'games.plataformFilter' => '/juegos/plataforma/{plataform}',
         'games.filter' => 'filtro',
         'games.admin.list' => 'administrar/juegos',
         'games.admin.create' => 'administrar/juegos/crear',
@@ -16,13 +17,13 @@
         'plataforms' => 'plataformas',
         'plataforms.admin.list' => 'administrar/plataformas',
         'plataforms.admin.create' => 'administrar/plataformas/crear',
-        'plataforms.admin.edit' => 'administrar/plataformas/{plataforma}/editar',
+        'plataforms.admin.edit' => 'administrar/plataformas/{plataform}/editar',
 
         'payments.index' => 'pago/{game}/{user}',
         'payments.store' => 'pago/{game}/{user}/guardar',
 
         'chat.list' => 'chat/lista',
-        'chat.index' => 'chat/{user}',
+        'chat.index' => 'chat/{id}',
 
         'mail.index' => 'contacto',
         'mail.store' => 'contacto/guardar',

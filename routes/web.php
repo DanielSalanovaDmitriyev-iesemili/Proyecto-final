@@ -36,6 +36,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 Route::get(LaravelLocalization::transRoute('routes.games.index'), [GameController::class, 'index'])->name('games.index');
 Route::get(LaravelLocalization::transRoute('routes.games.show'), [GameController::class, 'show'])->name('games.show');
 Route::get(LaravelLocalization::transRoute('routes.games.categoryFilter'), [GameController::class, 'categoryFilter'])->name('games.category');
+Route::get(LaravelLocalization::transRoute('routes.games.plataformFilter'), [GameController::class, 'plataformFilter'])->name('games.plataform');
 Route::get(LaravelLocalization::transRoute('routes.games.filter'), [GameController::class, 'filter'])->name('games.filter');
 
 Route::get(LaravelLocalization::transRoute('routes.games.admin.list'), [GameController::class, 'gameList'])->name('games.admin.list')->middleware('auth');

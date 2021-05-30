@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
@@ -32,7 +33,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+
+        if(Lang::getLocale() == 'es'){
+           return redirect('/es/juegos');
+        }else{
+            return redirect('/en/games');
+        }
+        // return redirect()->route('games.index');
+        // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
@@ -49,6 +57,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        if(Lang::locale() == 'es'){
+            return  redirect('/es/juegos');
+        }else{
+            return redirect('/en/games');
+        }
+        // return redirect( url()->previous());
+        // return redirect('/');
     }
 }
