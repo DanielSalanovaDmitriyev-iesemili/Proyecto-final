@@ -45,7 +45,7 @@
                   <div class='md:flex-1 px-4'>
                     <div x-data='{ image: 1 }' x-cloak>
                       <div class='h-64 md:h-80 rounded-lg bg-gray-100 mb-4'>
-                        <img src="{{asset($game->img)}}" class='h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center'/>
+                        <img src="{{asset($game->img)}}" class='h-64 md:h-80 rounded-lg w-100 mb-4 flex items-center justify-center'/>
                       </div>
 
 
