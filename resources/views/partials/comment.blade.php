@@ -19,11 +19,7 @@
 
                         <p class="float-left">{{__('Created At')}}: {{$comment->created_at}}</p>
                         <button type="button" onclick="openModal('{{$comment->id}}')" class="bg-red-500 text-red-50 rounded-lg p-1 float-right hover:text-red-500 hover:bg-red-50">{{__('Delete')}}</button>
-                        {{-- <form action="{{route('comment.delete',$comment->id)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="bg-red-500 text-red-50 rounded-lg p-1 float-right hover:text-red-500 hover:bg-red-50">Eliminar</button>
-                        </form> --}}
+
 
                     </div>
 
@@ -64,19 +60,5 @@
       </div>
 </div>
 
-{{-- @foreach ($comments as $comment)
-    <div>
-        <h1>Game: {{$comment->game()->get('name')[0]->name}}</h1>
-        <h2>User: {{$comment->user_name}}</h2>
-        <p>{{$comment->message}}</p>
-        <p>Created At: {{$comment->created_at}}</p>
-        <form action="{{route('comment.delete',$comment->id)}}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit">Eliminar</button>
-        </form>
-    </div>
-@endforeach
-{{$comments->links()}} --}}
 
 @endsection

@@ -25,7 +25,7 @@ class GameFactory extends Factory
             'name' => $this->faker->realText(25),
             'description:es' => $this->faker->text(150),
             'description:en' => $this->faker->text(150),
-            'img' => 'img/imagen-' . $this->faker->randomNumber(1),
+            'img' => 'img/imagen-' . $this->faker->randomNumber(1) . '.jpg',
             'pegi' => $this->faker->randomElement(['3','7','12','16','18']),
             'price' => $this->faker->randomFloat(2,1,200),
             'state' => $this->faker->randomElement(['mal', 'regular', 'bien', 'como nuevo']),

@@ -1,6 +1,4 @@
 <div>
-
-
     <div class="flex flex-row w-full">
         <div class="flex flex-row w-full bg-purple-400 text-purple-50 p-4 rounded-md">
             {{__('You have entered as')}}: {{$name}}
@@ -20,23 +18,10 @@
             @if($errors->has('message'))
                 <p class="text-danger">{{ $errors->first('message')}}</p>
             @endif
-            <button class="p-3 mt-2 bg-green-400 text-green-50 hover:text-green-400 hover:bg-green-50" wire:click="sendMessage">{{__('Send')}}</button>
+            <button class="p-3 mt-2 bg-green-400 text-green-50
+            hover:text-green-400 hover:bg-green-50" wire:click="sendMessage">{{__('Send')}}</button>
         </div>
     </div>
-    {{-- <div>
-
-        <label style="display:none;" for="receiver_id">{{__('Receiver')}}
-            <input type="number" id="receiver_id" wire:model="receiver_id" name="receiver_id" value="{{$receiver_id}}">
-        </label>
-        <div>Has entrado a la sala como: {{$name}}</div>
-        <label for="message">{{__('Message')}}
-            <input type="text" id="message" wire:model="message" name="message">
-        </label>
-        <button wire:click="sendMessage">{{__('Send')}}</button>
-        @if($errors->has('message'))
-            <p class="text-danger" style="color:red;">{{ $errors->first('message')}}</p>
-        @endif
-    </div> --}}
     <script>
         window.livewire.on('messageSent', function () {
             document.getElementById('success').style.display = 'block';

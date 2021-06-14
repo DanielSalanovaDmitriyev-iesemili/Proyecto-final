@@ -22,7 +22,7 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('receiver_id');
+            $table->unsignedBigInteger('receiver_id')->nullable();
             $table->string('message', 250);
             $table->timestamps();
 

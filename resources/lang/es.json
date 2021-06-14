@@ -22,7 +22,7 @@
     "New": "Nuevo",
     "Send": "Enviar",
     "Spanish Description": "Descripción Español",
-    "English Description": "Descrip`ción Ingles",
+    "English Description": "Descripción Ingles",
     "Save":"Guardar",
     "Select a image": "Selecciona una imagen",
     "or drag and drop": "o arrastrala",
@@ -58,6 +58,13 @@
     "Quick actions":"Acciones rápidas",
     "Date":"Fecha",
     "Send Comment": "Enviar Comentario",
-    "Type Your Comment":"Escribe Tu Comentario"
+    "Type Your Comment":"Escribe Tu Comentario",
+    "Email":"Correo electrónico",
+    "Password":"Contraseña",
+    "Remember me": "Recordarme",
+    "Forgot your password?":"¿Has olvidado la contraseña?",
+    "Confirm Password":"Confirmar Contraseña",
+    "Already registered?": "Ya estás registrado?",
+    "Sign up to comment": "Registrese para comentar"
 
 }

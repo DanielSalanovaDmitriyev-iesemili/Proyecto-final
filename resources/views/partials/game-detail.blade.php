@@ -45,7 +45,7 @@
                   <div class='md:flex-1 px-4'>
                     <div x-data='{ image: 1 }' x-cloak>
                       <div class='h-64 md:h-80 rounded-lg bg-gray-100 mb-4'>
-                        <img src="{{asset('img/01.jpg')}}" class='h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center'/>
+                        <img src="{{asset($game->img)}}" class='h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center'/>
                       </div>
 
 
@@ -53,7 +53,7 @@
                   </div>
                   <div class='md:flex-1 px-4'>
                     <h2 class='mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl'>{{ $game->name}}</h2>
-                    <p class='text-gray-500 text-sm'>By <a href='#' class='text-indigo-600 hover:underline'>GameStore Company</a></p>
+                    <p class='text-gray-500 text-sm'>By <a href='#' class='text-indigo-600 hover:underline'>2LifeGames</a></p>
 
                     <div class='flex items-center space-x-4 my-4'>
                       <div>
@@ -107,7 +107,12 @@
 
                          </div>
                          <div class="-mr-1">
-                            <input type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100" value='{{__('Send Comment')}}'>
+                             @if (Auth::check())
+                                 <input type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100" value='{{__('Send Comment')}}'>
+                                 @else
+                                 <input class="bg-purple-500 text-white font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 " value='{{__('Sign up to comment')}}'>
+                             @endif
+
                          </div>
                       </div>
                    </form>
@@ -134,61 +139,5 @@
 
 </div>
 
-{{-- @foreach ($comments as $comment)
-                 < class="flex mt-3">
-                     <div class="mr-5 bg-gray-50">{{$comment->user_name}}</div>
-                         <div class="w-3/4 bg-gray-100">{{$comment->message}}</div>
-                         <div class="bg-gray-200 w-auto">Fecha: {{$comment->created_at}}</div>
-                     </>
-                 </div>
-                 @endforeach --}}
 
-
-
-
-{{-- <div class="col-md-3">
-    <h1>{{ $game->name}}</h1>
-    <p>{{$game->description}}</p>
-    <img src="{{$game->img}}" alt="dsad">
-    <div>
-        <label>{{$game->pegi}} | {{$game->price}} | {{$game->state}}</label>
-        <label>{{$game->published}}</label>
-        <div>
-            @foreach ($game->plataforms()->get() as $plataform)
-                {{$plataform->name}}
-            @endforeach
-        </div>
-        <div>
-            @foreach ($game->categories()->get() as $category)
-                {{$category->name}}
-            @endforeach
-        </div>
-    </div>
-    <div>
-        @if (Auth::check())
-            <div class="nav-item">
-                <a href="{{route('payments.index', [$game->id, Auth::user()->id])}}">Comprar</a>
-            </div>
-        @endif
-        <div>
-            Logueate para comprar!
-        </div>
-    </div>
-    <div>
-        <h1>Comentarios!</h1>
-        <form action="{{route('comment.store', $game->id)}}" method="POST">
-            @csrf
-            <textarea id="" cols="30" rows="10" name="message"></textarea>
-            <button type="submit">Comentar</button>
-        </form>
-        <div>
-            @foreach ($comments as $comment)
-                <div>
-                    <label>{{$comment->user_name}}: {{$comment->message}}</label>
-                </div>
-            @endforeach
-        </div>
-
-    </div>
-</div> --}}
 @endsection

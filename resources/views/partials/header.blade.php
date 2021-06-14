@@ -1,6 +1,8 @@
-<div class="bg-white flex p-6 shadow-sm">
-    <img src="../src/img/menu.svg" class="md:hidden block mr-4">
-    <h6 class="text-2xl font-bold flex-grow">Gamestore</h6>
+<div class="bg-white flex p-6 shadow-sm align-middle justify-center">
+    <div class="flex align-middle justify-center">
+        <img src="{{asset('img/logo.jpg')}}" class="mr-4 w-20">
+    </div>
+    <h6 class="text-2xl font-bold flex-grow pt-3">2LifeGames</h6>
     @if (Route::has('login'))
                 <div class="hidden top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -36,20 +38,13 @@
                       </div>
 
                       <style>
-                        /* since nested groupes are not supported we have to use
-                           regular css for the nested dropdowns
-                        */
+
                         li>ul                 { transform: translatex(100%) scale(0) }
                         li:hover>ul           { transform: translatex(101%) scale(1) }
                         li > button svg       { transform: rotate(-90deg) }
                         li:hover > button svg { transform: rotate(-270deg) }
 
-                        /* Below styles fake what can be achieved with the tailwind config
-                           you need to add the group-hover variant to scale and define your custom
-                           min width style.
-                             See https://codesandbox.io/s/tailwindcss-multilevel-dropdown-y91j7?file=/index.html
-                             for implementation with config file
-                        */
+
                         .group:hover .group-hover\:scale-100 { transform: scale(1) }
                         .group:hover .group-hover\:-rotate-180 { transform: rotate(180deg) }
                         .scale-0 { transform: scale(0) }

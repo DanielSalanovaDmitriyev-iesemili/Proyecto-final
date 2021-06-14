@@ -50,8 +50,10 @@ class ChatForm extends Component
         $currentUser = Auth::user()->rol()->get('name');
         $currentRol = $currentUser[0]->name;
         if(Auth::user()->id == $this->receiver_id) {
+            //Chat público
             $room->users()->attach([$this->user_id => ['message' => $this->message]]);
         }else{
+            //chat privado
             if($currentRol == 'client') {
                 $chatAdmin = User::where('rol_id', 3)->first();
                 $room->users()->attach([$this->user_id => ['receiver_id' => $chatAdmin->id,'message' => $this->message]]);

@@ -28,11 +28,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
 	//games
+require __DIR__.'/auth.php';
 Route::get(LaravelLocalization::transRoute('routes.games.index'), [GameController::class, 'index'])->name('games.index');
 Route::get(LaravelLocalization::transRoute('routes.games.show'), [GameController::class, 'show'])->name('games.show');
 Route::get(LaravelLocalization::transRoute('routes.games.categoryFilter'), [GameController::class, 'categoryFilter'])->name('games.category');

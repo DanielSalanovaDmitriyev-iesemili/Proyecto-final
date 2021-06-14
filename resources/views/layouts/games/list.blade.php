@@ -85,17 +85,13 @@
                             </div>
 
                             <div class="p-7 flex justify-end items-center w-full">
-                                {{-- <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
-                                    Ok
-                                </button> --}}
+
                                 <form action="{{route('games.delete',$game->id)}}" method="POST" class="py-2 px4 mr-3">
                                     @csrf
                                     @method("DELETE")
                                     <button type="submit"  class="bg-blue-500 p-2 text-white hover:shadow-lg font-bold py-2 px-4 rounded mr-3">OK</button>
                                 </form>
-                                {{-- <button type="button" onclick="modalClose('{{$game->id}}')" class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                                    Close
-                                </button> --}}
+
                             </div>
                         </div>
                     </div>
@@ -124,18 +120,14 @@
                 <td  class="p-2 border-r">
                     <a href="{{route('games.edit', $game->id)}}" class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin">{{__('Edit')}}</a>
 
-                    {{-- <a href="#" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</a> --}}
+
                 </td>
                 <td  class="p-2 border-r">
 
                         <button type="button" onclick="openModal('{{$game->id}}')" class="px-4 py-2 bg-red-500 text-white rounded mr-3">{{__('Delete')}}</button>
 
 
-                    {{-- <form action="{{route('games.delete',$game->id)}}" method="POST">
-                        @csrf
-                        @method("DELETE")
-                        <button type="submit"  class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">{{__('Delete')}}</button>
-                    </form> --}}
+
                 </td>
             </tr>
             @endforeach
@@ -144,47 +136,5 @@
         </tbody>
     </table>
 </div>
-{{-- <table>
-    <tr>
-      <th>ID</th>
-      <th>{{__('Name')}}</th>
-      <th>{{__('Description')}}</th>
-      <th>{{__('Image')}}</th>
-      <th>Pegi</th>
-      <th>{{__('Price')}}</th>
-      <th>{{__('State')}}</th>
-      <th>{{__('Plataforms')}}</th>
-      <th>{{__('Genres')}}</th>
-      <th></th>
-      <th></th>
-    </tr>
-    @foreach ($games as $game)
-        <tr>
-            <td>{{$game->id}}</td>
-            <td>{{$game->name}}</td>
-            <td>{{$game->description}}</td>
-            <td>{{$game->img}}</td>
-            <td>{{$game->pegi}}</td>
-            <td>{{$game->price}}</td>
-            <td>{{$game->state}}</td>
-            <td>
-                @foreach ($game->plataforms()->get() as $plataform)
-                    {{$plataform->name}}
-                @endforeach
-            </td>
-            <td>
-                @foreach ($game->categories as $category)
-                    {{$category->name}}
-                @endforeach
-            </td>
-            <td><a href="{{route('games.edit', $game->id)}}">{{__('Edit')}}</a></td>
-            <td><form action="{{route('games.delete',$game->id)}}" method="POST">
-                @csrf
-                @method("DELETE")
-                <button type="submit">{{__('Delete')}}</button>
-            </form></td>
-        </tr>
-    @endforeach
-    {{$games->links()}}
-  </table> --}}
+
 @endsection

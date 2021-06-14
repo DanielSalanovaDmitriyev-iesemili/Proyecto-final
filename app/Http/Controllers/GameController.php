@@ -208,8 +208,9 @@ class GameController extends Controller
         $games = Category::where('id', $category->id)->first()->games()->paginate(6);
         $categories = Category::all();
         $plataforms = Plataform::all();
+        $currentCategory = $category;
 
-        return view('partials.games', compact('games', 'plataforms', 'categories'));
+        return view('partials.games', compact('games', 'plataforms','currentCategory', 'categories'));
     }
 
     public function plataformFilter(Plataform $plataform)

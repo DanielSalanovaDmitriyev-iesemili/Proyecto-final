@@ -24,11 +24,12 @@ class RoomController extends Controller
             $users = Room::first()->users()->wherePivot('receiver_id', Auth::user()->id)->distinct('user_id')->pluck('user_id');
             return view('partials.chat-list', compact('users'));
         }else{
-            $users = Room::first()->users()->wherePivot('receiver_id',Auth::user()->id)->orWhere('receiver_id',Auth::user()->id)->distinct('user_id')->pluck('user_id');
-            foreach ($users as $user){
-                return view('partials.chat-list',compact('users'));
-            }
-            $users = User::where('rol_id', 3)->first();
+            // $users = Room::first()->users()->wherePivot('receiver_id',Auth::user()->id)->orWhere('receiver_id',Auth::user()->id)->distinct('user_id')->pluck('user_id');
+            // foreach ($users as $user){
+            //     return view('partials.chat-list',compact('users'));
+            // }
+            $adminChat = User::where('rol_id', 3)->first();
+            $users = $adminChat->id;
             return view('partials.chat-list',compact('users'));
         }
 

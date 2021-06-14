@@ -30,7 +30,8 @@ class ChatList extends Component
             if(Auth::user()->rol_id == 2) {
                 $chatAdmin = User::where('rol_id', 3)->first();
                 $this->receiver_id = $chatAdmin->id;
-                $this->messages = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id)->get();
+                $messagesList = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id);
+                $this->messages = $messagesList->whereNotNull('receiver_id')->get();
             }
             //Admin chat
             else{
@@ -55,7 +56,8 @@ class ChatList extends Component
             $messages = Room::where('id',1)->first();
             //Cliente
             if(Auth::user()->rol_id == 2) {
-                $this->messages = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id)->get();
+                $messagesList = $messages->users()->wherePivot('receiver_id',Auth::user()->id)->orWherePivot('user_id',Auth::user()->id);
+                $this->messages = $messagesList->whereNotNull('receiver_id')->get();
             }
             //Admin chat
             else{

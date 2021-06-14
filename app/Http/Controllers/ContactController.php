@@ -35,9 +35,9 @@ class ContactController extends Controller
     public function validateContact()
     {
         return request()->validate([
-            'name' => 'required',
-            'surname' => 'required',
-            'email' => 'required',
+            'name' => 'required|max:35',
+            'surname' => 'required|max:50',
+            'email' => 'required|max:50',
             'issue' => 'required',
             'message' => 'required'
         ]);

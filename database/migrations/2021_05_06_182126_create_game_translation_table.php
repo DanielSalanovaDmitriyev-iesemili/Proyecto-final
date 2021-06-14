@@ -16,7 +16,7 @@ class CreateGameTranslationTable extends Migration
         Schema::create('game_translations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('game_id');
-            $table->string('locale')->index();
+            $table->string('locale',4)->index();
             $table->text('description');
 
             $table->unique(['game_id', 'locale']);

@@ -2,8 +2,8 @@
     return [
         'games.index' => "juegos",
         'games.show' => "juegos/{game}",
-        'games.categoryFilter' => '/juegos/categoria/{category}',
-        'games.plataformFilter' => '/juegos/plataforma/{plataform}',
+        'games.categoryFilter' => 'juegos/categoria/{category}',
+        'games.plataformFilter' => 'juegos/plataforma/{plataform}',
         'games.filter' => 'filtro',
         'games.admin.list' => 'administrar/juegos',
         'games.admin.create' => 'administrar/juegos/crear',

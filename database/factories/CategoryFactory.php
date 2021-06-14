@@ -25,7 +25,7 @@ class CategoryFactory extends Factory
             'name' =>$this->faker->randomElement(['accion', 'aventuras', 'mmo', 'rpg', 'rol', 'mesa', 'shooter']),
             'description:es' => $this->faker->text(),
             'description:en' => $this->faker->text(),
-            'img' => 'img/category-' . $this->faker->randomNumber(1)
+            'img' => 'img/category-' . $this->faker->randomNumber(1) . '.jpg'
         ];
     }
 }

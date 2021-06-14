@@ -36,9 +36,9 @@ class CreateGamesTable extends Migration
         Schema::create('game_user', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('game_id');
-            $table->string('invoice');
+            $table->string('invoice',40);
             $table->double('amount');
-            $table->string('currency');
+            $table->string('currency',3);
 
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('cascade');

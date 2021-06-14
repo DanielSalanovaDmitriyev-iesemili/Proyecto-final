@@ -28,7 +28,7 @@ class PaymentController extends Controller
 			'amount' => $amount,
             'customer' => Auth::user()->stripe_id,
 			'currency' => 'EUR',
-			'description' => 'Payment From Codehunger',
+			'description' => 'Payment From 2LifeGames',
 			'payment_method_types' => ['card'],
 		]);
 		$intent = $payment_intent->client_secret;

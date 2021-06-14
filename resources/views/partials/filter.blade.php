@@ -2,6 +2,12 @@
 <div class="flex h-screen">
     <div class="w-64 pr-6 border-r border-gray-200">
         <div class='m-5'>
+            <div class='mt-4 mb-4'>
+                <h4 class='border-b-2 border-gray-600'>{{__('All games')}}</h4>
+                <div class='relative inline-flex mt-2'>
+                    <a href="{{route('games.index')}}">{{__('All games')}}</a>
+                </div>
+            </div>
             <h1 class='uppercase font-bold'>{{__('Filters')}}</h1>
             <form method="GET" action="{{route('games.filter')}}">
                 <div class="grid grid-cols-2">
@@ -50,6 +56,7 @@
                         <input name="endPrice" type="number" step="0.01" class='border border-gray-300 rounded-full text-gray-600 h-10 pl-5 bg-white hover:border-gray-400 focus:outline-none appearance-none' style="width: 154px !important;">
                       </div>
                 </div>
+
                 <button type="submit" class="bg-purple-500 mt-4 rounded-xl p-2 text-purple-50 hover:bg-purple-50 hover:text-purple-500">{{__('Search')}}</button>
             </form>
     </div>
